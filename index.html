@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Max — Web Developer</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<a href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #04050a;
@@ -64,19 +64,19 @@
     letter-spacing: .12em; color: var(--cyan);
     text-shadow: 0 0 18px var(--cyan);
   }
-  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
-  .nav-links a {
+  .nav-as { display: flex; gap: 2.4rem; list-style: none; }
+  .nav-as a {
     font-family: 'Space Mono', monospace; font-size: .72rem;
     letter-spacing: .18em; text-transform: uppercase; color: var(--white);
     text-decoration: none; opacity: .6; transition: opacity .25s, color .25s;
     position: relative;
   }
-  .nav-links a::after {
+  .nav-as a::after {
     content: ''; position: absolute; bottom: -4px; left: 0;
     width: 0; height: 1px; background: var(--cyan); transition: width .3s;
   }
-  .nav-links a:hover { opacity: 1; color: var(--cyan); }
-  .nav-links a:hover::after { width: 100%; }
+  .nav-as a:hover { opacity: 1; color: var(--cyan); }
+  .nav-as a:hover::after { width: 100%; }
 
   section { position: relative; z-index: 2; }
 
@@ -247,16 +247,16 @@
     transform: translateY(10px); transition: transform .45s .05s, opacity .45s .05s;
   }
   .project-card:hover .card-desc { opacity: .55; transform: translateY(0); }
-  .card-link {
+  .card-a {
     display: inline-flex; align-items: center; gap: .5rem;
     font-family: 'Space Mono', monospace; font-size: .65rem; letter-spacing: .2em;
     text-transform: uppercase; color: var(--cyan); text-decoration: none;
     margin-top: 1.2rem; opacity: 0; transform: translateY(10px);
     transition: transform .45s .08s, opacity .45s .08s;
   }
-  .project-card:hover .card-link { opacity: 1; transform: translateY(0); }
-  .card-link svg { transition: transform .25s; }
-  .card-link:hover svg { transform: translateX(4px); }
+  .project-card:hover .card-a { opacity: 1; transform: translateY(0); }
+  .card-a svg { transition: transform .25s; }
+  .card-a:hover svg { transform: translateX(4px); }
 
   /* SKILLS */
   #skills { padding: 8rem 6vw; }
@@ -373,7 +373,7 @@
 
 <nav>
   <div class="nav-logo">MAX.DEV</div>
-  <ul class="nav-links">
+  <ul class="nav-as">
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -460,7 +460,7 @@
         <div class="card-tag">E-Commerce / Shopify</div>
         <div class="card-title">ROKIOVERTIME</div>
         <div class="card-desc">A high-end fashion marketplace with immersive product photography, animated transitions, and sub-2s load times.</div>
-        <link href="Rokiovertime.com" class="card-link">View Case Study <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></link>
+        <a href="https://www.Rokiovertime.com" class="card-a">View Case Study <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
       </div>
     </div>
     <div class="project-card reveal reveal-delay-1">
@@ -475,7 +475,7 @@
         <div class="card-tag">Car Detailing / Dashboard</div>
         <div class="card-title">CME Detailing</div>
         <div class="card-desc">Real-time analytics & SEO saved this buisness.</div>
-        <link href="https://cmedetailing.net/" class="card-link">View Case Study <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></link>
+        <a href="https://cmedetailing.net" class="card-a">View Case Study <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
       </div>
     </div>
     <div class="project-card reveal reveal-delay-2">
@@ -490,7 +490,7 @@
         <div class="card-tag">Nutrition / B2B Sales</div>
         <div class="card-title">Aether Studio</div>
         <div class="card-desc">Bold brand identity and award-worthy portfolio site for a leading nutrition business.</div>
-        <link href="www.nutraviva.com.au" class="card-link">View Case Study <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></link>
+        <a href="https://www.nutraviva.com.au" class="card-a">View Case Study <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
       </div>
     </div>
     <div class="project-card reveal reveal-delay-3">
@@ -507,7 +507,7 @@
         <div class="card-tag">Its your time to shine</div>
         <div class="card-title">Your Turn</div>
         <div class="card-desc">Whatever your heart can desire!</div>
-        <a href="contact" class="card-link">View Case Study <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+        <a href="contact" class="card-a">View Case Study <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
       </div>
     </div>
   </div>
