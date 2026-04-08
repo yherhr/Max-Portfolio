@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Max — Web Developer</title>
-<a href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #04050a;
@@ -64,19 +64,19 @@
     letter-spacing: .12em; color: var(--cyan);
     text-shadow: 0 0 18px var(--cyan);
   }
-  .nav-as { display: flex; gap: 2.4rem; list-style: none; }
-  .nav-as a {
+  .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+  .nav-links a {
     font-family: 'Space Mono', monospace; font-size: .72rem;
     letter-spacing: .18em; text-transform: uppercase; color: var(--white);
     text-decoration: none; opacity: .6; transition: opacity .25s, color .25s;
     position: relative;
   }
-  .nav-as a::after {
+  .nav-links a::after {
     content: ''; position: absolute; bottom: -4px; left: 0;
     width: 0; height: 1px; background: var(--cyan); transition: width .3s;
   }
-  .nav-as a:hover { opacity: 1; color: var(--cyan); }
-  .nav-as a:hover::after { width: 100%; }
+  .nav-links a:hover { opacity: 1; color: var(--cyan); }
+  .nav-links a:hover::after { width: 100%; }
 
   section { position: relative; z-index: 2; }
 
@@ -373,7 +373,7 @@
 
 <nav>
   <div class="nav-logo">MAX.DEV</div>
-  <ul class="nav-as">
+  <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="#skills">Skills</a></li>
