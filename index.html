@@ -1,22 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
- <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Max — Web Developer</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Max | Web Developer Bathurst NSW &mdash; React, Shopify &amp; Next.js Specialist</title>
+  <meta name="description" content="Max is a Bathurst-based freelance web developer specialising in React, Next.js and Shopify. 80+ projects delivered. Sub-2s load times. 99 Lighthouse score. Available for new projects.">
+  <meta name="keywords" content="web developer Bathurst, web developer NSW, React developer Australia, Next.js developer, Shopify developer, freelance web developer, custom website design, UI UX designer, front-end developer, web design Bathurst, website developer Central West NSW">
+  <meta name="author" content="Max, Web Developer">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="theme-color" content="#04050a">
+
+  <link rel="canonical" href="https://max.dev/">
+  <link rel="alternate" hreflang="en-AU" href="https://max.dev/">
+  <link rel="alternate" hreflang="en" href="https://max.dev/">
+
+  <meta name="geo.region" content="AU-NSW">
+  <meta name="geo.placename" content="Bathurst, New South Wales, Australia">
+  <meta name="geo.position" content="-33.4192;149.5776">
+  <meta name="ICBM" content="-33.4192, 149.5776">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://max.dev/">
+  <meta property="og:title" content="Max | Web Developer Bathurst NSW &mdash; React, Shopify &amp; Next.js">
+  <meta property="og:description" content="Crafting high-performance, visually stunning digital experiences for brands that refuse to be ordinary. 80+ projects. 100+ happy clients. Bathurst, NSW.">
+  <meta property="og:image" content="https://max.dev/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Max &mdash; Web Developer portfolio">
+  <meta property="og:site_name" content="Max Web Developer">
+  <meta property="og:locale" content="en_AU">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://max.dev/">
+  <meta name="twitter:title" content="Max | Web Developer Bathurst &mdash; React, Shopify &amp; Next.js">
+  <meta name="twitter:description" content="High-performance React, Next.js &amp; Shopify builds from Bathurst, NSW. 80+ projects. 99 Lighthouse score.">
+  <meta name="twitter:image" content="https://max.dev/og-image.jpg">
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://max.dev/#person","name":"Max","url":"https://max.dev/","jobTitle":"Web Developer","description":"Freelance web developer in Bathurst, NSW specialising in React, Next.js, Shopify and high-performance web experiences.","knowsAbout":["HTML","CSS","JavaScript","React","Next.js","Shopify","WordPress","UI/UX Design","Motion Design","SEO","Web Performance"],"address":{"@type":"PostalAddress","addressLocality":"Bathurst","addressRegion":"NSW","addressCountry":"AU"},"telephone":"+61490365553"},{"@type":"ProfessionalService","@id":"https://max.dev/#business","name":"Max Web Developer","url":"https://max.dev/","description":"Custom web development: React, Next.js, Shopify, performance-optimised sites for startups, agencies and global brands.","telephone":"+61490365553","priceRange":"$$","areaServed":["Australia","Bathurst","New South Wales","Sydney"],"address":{"@type":"PostalAddress","addressLocality":"Bathurst","addressRegion":"NSW","addressCountry":"AU"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"5","reviewCount":"100","bestRating":"5"}},{"@type":"WebSite","@id":"https://max.dev/#website","url":"https://max.dev/","name":"Max Web Developer","publisher":{"@id":"https://max.dev/#person"}}]}</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+
 <style>
 /* ══════════════════════════════════════
-   DESIGN TOKENS  — fluid scale via clamp
+   DESIGN TOKENS
 ══════════════════════════════════════ */
 :root{
   --bg:#04050a; --cyan:#00ffe7; --magenta:#ff2d78;
   --yellow:#f5e642; --white:#f0f0f0;
   --glass:rgba(255,255,255,.04); --gb:rgba(255,255,255,.08);
-  /* side padding shrinks gracefully on small screens */
   --px: clamp(1.2rem, 6vw, 7rem);
-  /* vertical section spacing */
   --sy: clamp(4rem, 9vw, 9rem);
 }
 
@@ -24,13 +63,12 @@
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--white);font-family:'Syne',sans-serif;overflow-x:hidden;}
 
-/* noise grain */
 body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.035;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
 section,.ticker-wrap,.glow-line,footer{position:relative;z-index:2;}
 
-/* ── CUSTOM CURSOR — only for real mice ── */
+/* ── CURSOR ── */
 @media(pointer:fine){
   body{cursor:none;}
   #cursor{position:fixed;width:10px;height:10px;background:var(--cyan);border-radius:50%;
@@ -51,21 +89,16 @@ nav{
   border-bottom:1px solid var(--gb);
   backdrop-filter:blur(16px);background:rgba(4,5,10,.7);
 }
-.nav-logo{
-  font-family:'Bebas Neue',sans-serif;font-size:clamp(1.25rem,3vw,1.7rem);
-  letter-spacing:.12em;color:var(--cyan);text-shadow:0 0 18px var(--cyan);flex-shrink:0;
-}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.25rem,3vw,1.7rem);
+  letter-spacing:.12em;color:var(--cyan);text-shadow:0 0 18px var(--cyan);flex-shrink:0;}
 .nav-links{display:flex;gap:clamp(1rem,2.5vw,2.4rem);list-style:none;}
-.nav-links a{
-  font-family:'Space Mono',monospace;font-size:clamp(.58rem,1.2vw,.75rem);
+.nav-links a{font-family:'Space Mono',monospace;font-size:clamp(.58rem,1.2vw,.75rem);
   letter-spacing:.18em;text-transform:uppercase;color:var(--white);
-  text-decoration:none;opacity:.6;transition:opacity .25s,color .25s;position:relative;
-}
+  text-decoration:none;opacity:.6;transition:opacity .25s,color .25s;position:relative;}
 .nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:width .3s;}
 .nav-links a:hover{opacity:1;color:var(--cyan);}
 .nav-links a:hover::after{width:100%;}
 
-/* hamburger */
 .nav-ham{display:none;flex-direction:column;justify-content:center;gap:5px;
   width:32px;height:32px;background:none;border:none;padding:0;cursor:pointer;z-index:200;}
 .nav-ham span{display:block;width:100%;height:1.5px;background:var(--cyan);transition:transform .3s,opacity .3s;}
@@ -73,17 +106,13 @@ nav{
 .nav-ham.open span:nth-child(2){opacity:0;transform:scaleX(0);}
 .nav-ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
 
-.mob-menu{
-  display:none;position:fixed;inset:0;z-index:99;
+.mob-menu{display:none;position:fixed;inset:0;z-index:99;
   background:rgba(4,5,10,.97);backdrop-filter:blur(20px);
   flex-direction:column;justify-content:center;align-items:center;gap:2rem;
-  opacity:0;pointer-events:none;transition:opacity .3s;
-}
+  opacity:0;pointer-events:none;transition:opacity .3s;}
 .mob-menu.open{opacity:1;pointer-events:all;}
-.mob-menu a{
-  font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,10vw,4rem);
-  letter-spacing:.1em;color:var(--white);text-decoration:none;transition:color .2s;
-}
+.mob-menu a{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,10vw,4rem);
+  letter-spacing:.1em;color:var(--white);text-decoration:none;transition:color .2s;}
 .mob-menu a:active{color:var(--cyan);}
 
 @media(max-width:700px){
@@ -93,15 +122,13 @@ nav{
 }
 
 /* ══════════════════════════════════════
-   SHARED COMPONENTS
+   SHARED
 ══════════════════════════════════════ */
-.btn{
-  font-family:'Space Mono',monospace;font-size:clamp(.6rem,1.3vw,.75rem);
+.btn{font-family:'Space Mono',monospace;font-size:clamp(.6rem,1.3vw,.75rem);
   letter-spacing:.18em;text-transform:uppercase;text-decoration:none;
   padding:clamp(.72rem,1.8vw,.95rem) clamp(1.1rem,3vw,2.2rem);
   border:1px solid var(--cyan);color:var(--cyan);background:transparent;
-  position:relative;overflow:hidden;transition:color .3s;display:inline-block;white-space:nowrap;
-}
+  position:relative;overflow:hidden;transition:color .3s;display:inline-block;white-space:nowrap;}
 @media(pointer:fine){.btn{cursor:none;}}
 .btn::before{content:'';position:absolute;inset:0;background:var(--cyan);
   transform:translateX(-101%);transition:transform .35s cubic-bezier(.77,0,.18,1);}
@@ -122,21 +149,15 @@ nav{
 /* ══════════════════════════════════════
    HERO
 ══════════════════════════════════════ */
-#hero{
-  min-height:100svh;display:flex;flex-direction:column;justify-content:center;
-  padding:clamp(5rem,12vw,9rem) var(--px) clamp(3rem,6vw,5rem);overflow:hidden;
-}
-.hero-eye{
-  font-family:'Space Mono',monospace;font-size:clamp(.58rem,1.4vw,.78rem);
+#hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(5rem,12vw,9rem) var(--px) clamp(3rem,6vw,5rem);overflow:hidden;}
+.hero-eye{font-family:'Space Mono',monospace;font-size:clamp(.58rem,1.4vw,.78rem);
   letter-spacing:.28em;text-transform:uppercase;color:var(--cyan);
-  margin-bottom:clamp(.8rem,2vw,1.4rem);animation:fadeUp .8s .2s both;
-}
+  margin-bottom:clamp(.8rem,2vw,1.4rem);animation:fadeUp .8s .2s both;}
 .hero-eye span{opacity:.5;}
-.hero-name{
-  font-family:'Bebas Neue',sans-serif;
+.hero-name{font-family:'Bebas Neue',sans-serif;
   font-size:clamp(4rem,17vw,15rem);line-height:.88;letter-spacing:-.01em;
-  animation:fadeUp .8s .35s both;
-}
+  animation:fadeUp .8s .35s both;}
 .hero-name .stroke{-webkit-text-stroke:1.5px var(--white);color:transparent;}
 .hero-name .glitch{position:relative;color:var(--white);display:inline-block;}
 .hero-name .glitch::before,.hero-name .glitch::after{
@@ -145,22 +166,14 @@ nav{
   clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);}
 .hero-name .glitch::after{color:var(--magenta);animation:glitch2 3.5s infinite;
   clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);}
-.hero-sub{
-  font-size:clamp(.93rem,2.2vw,1.35rem);opacity:.55;
+.hero-sub{font-size:clamp(.93rem,2.2vw,1.35rem);opacity:.55;
   max-width:520px;margin-top:clamp(.9rem,2.5vw,2rem);line-height:1.65;
-  animation:fadeUp .8s .5s both;
-}
-.hero-cta{
-  display:flex;flex-wrap:wrap;gap:clamp(.6rem,2vw,1.2rem);
-  margin-top:clamp(1.5rem,4vw,3rem);animation:fadeUp .8s .65s both;
-}
-.hero-scroll{
-  display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;
-  margin-top:clamp(2rem,5vw,4rem);
-  font-family:'Space Mono',monospace;font-size:.56rem;
-  letter-spacing:.25em;text-transform:uppercase;opacity:.3;
-  animation:fadeUp .8s .9s both;
-}
+  animation:fadeUp .8s .5s both;}
+.hero-cta{display:flex;flex-wrap:wrap;gap:clamp(.6rem,2vw,1.2rem);
+  margin-top:clamp(1.5rem,4vw,3rem);animation:fadeUp .8s .65s both;}
+.hero-scroll{display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;
+  margin-top:clamp(2rem,5vw,4rem);font-family:'Space Mono',monospace;font-size:.56rem;
+  letter-spacing:.25em;text-transform:uppercase;opacity:.3;animation:fadeUp .8s .9s both;}
 .scroll-line{width:1px;height:42px;background:linear-gradient(var(--white),transparent);
   animation:scrollLine 1.8s ease-in-out infinite;}
 
@@ -175,14 +188,11 @@ nav{
 .t-item.ac{color:var(--cyan);opacity:.7;}
 
 /* ══════════════════════════════════════
-   ABOUT  — auto-fit so it stacks gracefully
+   ABOUT
 ══════════════════════════════════════ */
-#about{
-  padding:var(--sy) var(--px);
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));
-  gap:clamp(2.5rem,6vw,6rem);align-items:center;
-}
+#about{padding:var(--sy) var(--px);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));
+  gap:clamp(2.5rem,6vw,6rem);align-items:center;}
 .about-label{font-family:'Space Mono',monospace;font-size:clamp(.58rem,1.3vw,.72rem);
   letter-spacing:.3em;text-transform:uppercase;color:var(--magenta);margin-bottom:clamp(.8rem,2vw,1.5rem);}
 .about-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.6rem,7vw,5.5rem);
@@ -206,14 +216,7 @@ nav{
    WORK
 ══════════════════════════════════════ */
 #work{padding:var(--sy) var(--px);}
-
-/* Mobile/tablet: equal columns via auto-fit */
-.proj-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));
-  gap:1.5px;
-}
-/* Desktop: asymmetric 12-col layout */
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:1.5px;}
 @media(min-width:900px){
   .proj-grid{grid-template-columns:repeat(12,1fr);}
   .proj-grid .project-card:nth-child(1){grid-column:span 7;}
@@ -221,32 +224,21 @@ nav{
   .proj-grid .project-card:nth-child(3){grid-column:span 4;}
   .proj-grid .project-card:nth-child(4){grid-column:span 8;}
 }
-
-.project-card{
-  position:relative;overflow:hidden;background:var(--glass);
-  border:1.5px solid var(--gb);transition:border-color .3s;
-  min-height:clamp(220px,32vw,480px);
-}
+.project-card{position:relative;overflow:hidden;background:var(--glass);
+  border:1.5px solid var(--gb);transition:border-color .3s;min-height:clamp(220px,32vw,480px);}
 .project-card:hover{border-color:var(--cyan);}
 @media(pointer:fine){.project-card{cursor:none;}}
-
 .card-bg{position:absolute;inset:0;transition:transform .6s cubic-bezier(.25,.46,.45,.94);}
 .project-card:hover .card-bg{transform:scale(1.06);}
 .cb1{background:linear-gradient(135deg,#0a1628,#091a2e,#0d0a1e);}
 .cb2{background:linear-gradient(135deg,#1a0828,#200d30);}
 .cb3{background:linear-gradient(135deg,#041418,#062028);}
 .cb4{background:linear-gradient(160deg,#180a04,#200e08);}
-
 .card-deco{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
 .card-deco svg{position:absolute;opacity:.08;transition:opacity .4s,transform .6s;}
 .project-card:hover .card-deco svg{opacity:.18;transform:scale(1.1) rotate(5deg);}
-
-/* Card content: slide-up on hover for mouse, always visible for touch */
-.card-content{
-  position:absolute;bottom:0;left:0;right:0;
-  padding:clamp(1.1rem,3vw,2.5rem);
-  background:linear-gradient(transparent,rgba(4,5,10,.93));
-}
+.card-content{position:absolute;bottom:0;left:0;right:0;
+  padding:clamp(1.1rem,3vw,2.5rem);background:linear-gradient(transparent,rgba(4,5,10,.93));}
 @media(pointer:fine){
   .card-content{transform:translateY(30%);transition:transform .45s cubic-bezier(.25,.46,.45,.94);}
   .project-card:hover .card-content{transform:translateY(0);}
@@ -255,15 +247,10 @@ nav{
   .card-lnk{opacity:0;transform:translateY(10px);transition:transform .45s .08s,opacity .45s .08s;}
   .project-card:hover .card-lnk{opacity:1;transform:translateY(0);}
 }
-@media(pointer:coarse){
-  .card-desc{opacity:.55;}
-  .card-lnk{opacity:1;}
-}
-
+@media(pointer:coarse){.card-desc{opacity:.55;}.card-lnk{opacity:1;}}
 .card-tag{font-family:'Space Mono',monospace;font-size:clamp(.52rem,1.2vw,.62rem);
   letter-spacing:.22em;text-transform:uppercase;color:var(--cyan);margin-bottom:.6rem;opacity:.8;}
-.card-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.5rem,3.5vw,2.2rem);
-  letter-spacing:.04em;line-height:1;}
+.card-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.5rem,3.5vw,2.2rem);letter-spacing:.04em;line-height:1;}
 .card-desc{font-size:clamp(.8rem,1.5vw,.9rem);margin-top:.7rem;line-height:1.6;max-width:400px;}
 .card-lnk{display:inline-flex;align-items:center;gap:.5rem;font-family:'Space Mono',monospace;
   font-size:clamp(.55rem,1.2vw,.65rem);letter-spacing:.18em;text-transform:uppercase;
@@ -275,20 +262,14 @@ nav{
    SKILLS
 ══════════════════════════════════════ */
 #skills{padding:var(--sy) var(--px);}
-.skills-wrap{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));
-  gap:clamp(2rem,5vw,6rem);align-items:start;
-}
+.skills-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));
+  gap:clamp(2rem,5vw,6rem);align-items:start;}
 @media(min-width:800px){.skills-wrap{grid-template-columns:1fr 2fr;}}
-
 .sk-list{display:flex;flex-direction:column;gap:1px;}
-.sk-item{
-  padding:clamp(1rem,2.5vw,1.6rem) clamp(.9rem,2.5vw,2rem);
+.sk-item{padding:clamp(1rem,2.5vw,1.6rem) clamp(.9rem,2.5vw,2rem);
   background:var(--glass);border:1px solid var(--gb);
   display:flex;justify-content:space-between;align-items:center;
-  transition:background .3s,border-color .3s;position:relative;overflow:hidden;
-}
+  transition:background .3s,border-color .3s;position:relative;overflow:hidden;}
 @media(pointer:fine){.sk-item{cursor:none;}}
 .sk-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
   background:var(--cyan);transform:scaleY(0);transform-origin:bottom;transition:transform .3s;}
@@ -296,7 +277,6 @@ nav{
 .sk-item:hover{background:rgba(0,255,231,.05);border-color:rgba(0,255,231,.2);}
 .sk-name{font-family:'Space Mono',monospace;font-size:clamp(.72rem,1.6vw,.88rem);letter-spacing:.08em;}
 .sk-lvl{font-family:'Bebas Neue',sans-serif;font-size:clamp(.9rem,2vw,1.15rem);color:var(--cyan);letter-spacing:.12em;}
-
 .sk-bars{display:flex;flex-direction:column;gap:clamp(1.1rem,2.5vw,2rem);}
 .sk-bar-head{display:flex;justify-content:space-between;margin-bottom:.6rem;
   font-family:'Space Mono',monospace;font-size:clamp(.6rem,1.3vw,.72rem);letter-spacing:.1em;opacity:.7;}
@@ -304,20 +284,15 @@ nav{
 .sk-fill{position:absolute;top:0;left:0;height:100%;width:0;
   background:linear-gradient(90deg,var(--cyan),var(--magenta));
   transition:width 1.4s cubic-bezier(.25,.46,.45,.94);box-shadow:0 0 10px var(--cyan);}
-.sk-fill.on{width:var(--w);}
 
 /* ══════════════════════════════════════
    PROCESS
 ══════════════════════════════════════ */
 #process{padding:var(--sy) var(--px);}
-.proc-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));
-  gap:1.5px;margin-top:clamp(2rem,5vw,5rem);
-}
+.proc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));
+  gap:1.5px;margin-top:clamp(2rem,5vw,5rem);}
 .proc-step{padding:clamp(1.7rem,3.5vw,3rem) clamp(1.2rem,3vw,2.5rem);
-  background:var(--glass);border:1px solid var(--gb);
-  position:relative;overflow:hidden;transition:background .4s;}
+  background:var(--glass);border:1px solid var(--gb);position:relative;overflow:hidden;transition:background .4s;}
 .proc-step:hover{background:rgba(245,230,66,.03);}
 .step-n{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,6vw,5rem);line-height:1;
   -webkit-text-stroke:1px rgba(255,255,255,.07);color:transparent;
@@ -348,16 +323,16 @@ nav{
 ══════════════════════════════════════ */
 footer{padding:clamp(1.1rem,3vw,2rem) var(--px);border-top:1px solid var(--gb);
   display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.6rem;
-  font-family:'Space Mono',monospace;font-size:clamp(.52rem,1.2vw,.65rem);
-  letter-spacing:.15em;opacity:.3;}
+  font-family:'Space Mono',monospace;font-size:clamp(.52rem,1.2vw,.65rem);letter-spacing:.15em;opacity:.3;}
+footer a{color:inherit;text-decoration:none;}
 
 /* ══════════════════════════════════════
-   REVEAL
+   REVEAL — visible by default, animated when JS loads
 ══════════════════════════════════════ */
-.reveal{opacity:0;transform:translateY(34px);
-  transition:opacity .8s,transform .8s cubic-bezier(.25,.46,.45,.94);}
-.reveal.visible{opacity:1;transform:none;}
-.d1{transition-delay:.1s;} .d2{transition-delay:.2s;} .d3{transition-delay:.3s;}
+.reveal{transition:opacity .8s,transform .8s cubic-bezier(.25,.46,.45,.94);}
+.js-ready .reveal{opacity:0;transform:translateY(34px);}
+.js-ready .reveal.visible{opacity:1;transform:none;}
+.d1{transition-delay:.1s;}.d2{transition-delay:.2s;}.d3{transition-delay:.3s;}
 
 /* ══════════════════════════════════════
    KEYFRAMES
@@ -391,7 +366,7 @@ footer{padding:clamp(1.1rem,3vw,2rem) var(--px);border-top:1px solid var(--gb);
 <div id="cursor-ring"></div>
 <canvas id="bg-canvas"></canvas>
 
-<!-- ── NAV ── -->
+<!-- NAV -->
 <nav>
   <div class="nav-logo">MAX.DEV</div>
   <ul class="nav-links">
@@ -413,67 +388,67 @@ footer{padding:clamp(1.1rem,3vw,2rem) var(--px);border-top:1px solid var(--gb);
   <a href="#cta"     class="ml">Contact</a>
 </div>
 
-<!-- ── HERO ── -->
+<!-- HERO -->
 <section id="hero">
-  <div class="hero-eye"><span>///</span> Available for projects <span>— Bathurst, AU</span></div>
+  <div class="hero-eye"><span>///</span> Available for projects <span>&#8212; Bathurst, AU</span></div>
   <h1 class="hero-name">
-    <div class="glitch" data-text="MAX">MAX</div><br>
+    <span class="glitch" data-text="MAX">MAX</span><br>
     <span class="stroke">BUILDS</span><br>
-    <div class="glitch" data-text="WEBSITES">WEBSITES</div>
+    <span class="glitch" data-text="WEBSITES">WEBSITES</span>
   </h1>
-  <p class="hero-sub">Crafting high-performance, visually stunning digital experiences for brands that refuse to be ordinary.</p>
+  <p class="hero-sub">Freelance web developer in Bathurst, NSW &#8212; crafting high-performance, visually stunning digital experiences for brands that refuse to be ordinary.</p>
   <div class="hero-cta">
     <a href="#work" class="btn btn-solid">View My Work</a>
-    <a href="#cta"  class="btn">Let's Talk</a>
+    <a href="#cta"  class="btn">Let&#8217;s Talk</a>
   </div>
   <div class="hero-scroll"><div class="scroll-line"></div>Scroll</div>
 </section>
 
-<!-- ── TICKER ── -->
+<!-- TICKER -->
 <div class="ticker-wrap">
   <div class="ticker">
-    <span class="t-item ac">WEB DESIGN</span><span class="t-item">✦</span>
-    <span class="t-item">DEVELOPMENT</span><span class="t-item">✦</span>
-    <span class="t-item ac">CSS WIZARDRY</span><span class="t-item">✦</span>
-    <span class="t-item">REACT &amp; NEXT.JS</span><span class="t-item">✦</span>
-    <span class="t-item ac">MOTION DESIGN</span><span class="t-item">✦</span>
-    <span class="t-item">UI / UX</span><span class="t-item">✦</span>
-    <span class="t-item ac">PERFORMANCE</span><span class="t-item">✦</span>
-    <span class="t-item">SEO OPTIMISED</span><span class="t-item">✦</span>
-    <span class="t-item ac">WEB DESIGN</span><span class="t-item">✦</span>
-    <span class="t-item">DEVELOPMENT</span><span class="t-item">✦</span>
-    <span class="t-item ac">CSS WIZARDRY</span><span class="t-item">✦</span>
-    <span class="t-item">REACT &amp; NEXT.JS</span><span class="t-item">✦</span>
-    <span class="t-item ac">MOTION DESIGN</span><span class="t-item">✦</span>
-    <span class="t-item">UI / UX</span><span class="t-item">✦</span>
-    <span class="t-item ac">PERFORMANCE</span><span class="t-item">✦</span>
-    <span class="t-item">SEO OPTIMISED</span><span class="t-item">✦</span>
+    <span class="t-item ac">WEB DESIGN</span><span class="t-item">&#10022;</span>
+    <span class="t-item">DEVELOPMENT</span><span class="t-item">&#10022;</span>
+    <span class="t-item ac">CSS WIZARDRY</span><span class="t-item">&#10022;</span>
+    <span class="t-item">REACT &amp; NEXT.JS</span><span class="t-item">&#10022;</span>
+    <span class="t-item ac">MOTION DESIGN</span><span class="t-item">&#10022;</span>
+    <span class="t-item">UI / UX</span><span class="t-item">&#10022;</span>
+    <span class="t-item ac">PERFORMANCE</span><span class="t-item">&#10022;</span>
+    <span class="t-item">SEO OPTIMISED</span><span class="t-item">&#10022;</span>
+    <span class="t-item ac">WEB DESIGN</span><span class="t-item">&#10022;</span>
+    <span class="t-item">DEVELOPMENT</span><span class="t-item">&#10022;</span>
+    <span class="t-item ac">CSS WIZARDRY</span><span class="t-item">&#10022;</span>
+    <span class="t-item">REACT &amp; NEXT.JS</span><span class="t-item">&#10022;</span>
+    <span class="t-item ac">MOTION DESIGN</span><span class="t-item">&#10022;</span>
+    <span class="t-item">UI / UX</span><span class="t-item">&#10022;</span>
+    <span class="t-item ac">PERFORMANCE</span><span class="t-item">&#10022;</span>
+    <span class="t-item">SEO OPTIMISED</span><span class="t-item">&#10022;</span>
   </div>
 </div>
 
-<!-- ── ABOUT ── -->
+<!-- ABOUT -->
 <section id="about">
   <div class="reveal">
-    <div class="about-label">// 001 — About</div>
+    <div class="about-label">// 001 &#8212; About</div>
     <h2 class="about-h">I Turn Ideas<br>Into <em>Reality</em></h2>
-    <p class="about-txt">With years of experience building for startups, agencies, and global brands, I specialise in creating websites that don't just look incredible — they perform.</p>
-    <p class="about-txt">Every pixel is intentional. Every interaction is crafted. Every millisecond of load time is fought for. That's the Max guarantee.</p>
+    <p class="about-txt">With years of experience building for startups, agencies, and global brands, I specialise in creating websites that don&#8217;t just look incredible &#8212; they perform.</p>
+    <p class="about-txt">Every pixel is intentional. Every interaction is crafted. Every millisecond of load time is fought for. That&#8217;s the Max guarantee.</p>
   </div>
   <div class="stat-grid reveal d2">
-    <div class="stat"><div class="stat-num" data-count="80">0</div><div class="stat-lbl">Projects Delivered</div></div>
-    <div class="stat"><div class="stat-num" data-count="6">0</div><div class="stat-lbl">Years Experience</div></div>
-    <div class="stat"><div class="stat-num" data-count="100">0</div><div class="stat-lbl">Happy Clients</div></div>
-    <div class="stat"><div class="stat-num" data-count="99">0</div><div class="stat-lbl">Lighthouse Score</div></div>
+    <div class="stat"><div class="stat-num" data-count="80">80+</div><div class="stat-lbl">Projects Delivered</div></div>
+    <div class="stat"><div class="stat-num" data-count="6">6+</div><div class="stat-lbl">Years Experience</div></div>
+    <div class="stat"><div class="stat-num" data-count="100">100+</div><div class="stat-lbl">Happy Clients</div></div>
+    <div class="stat"><div class="stat-num" data-count="99">99+</div><div class="stat-lbl">Lighthouse Score</div></div>
   </div>
 </section>
 
 <div class="glow-line"></div>
 
-<!-- ── WORK ── -->
+<!-- WORK -->
 <section id="work">
   <div class="sec-header reveal">
     <div>
-      <div class="sec-label">// 002 — Selected Work</div>
+      <div class="sec-label">// 002 &#8212; Selected Work</div>
       <h2 class="sec-title">Recent <span class="outline">Projects</span></h2>
     </div>
     <a href="#" class="btn">All Projects</a>
@@ -483,7 +458,7 @@ footer{padding:clamp(1.1rem,3vw,2rem) var(--px);border-top:1px solid var(--gb);
     <div class="project-card reveal">
       <div class="card-bg cb1"></div>
       <div class="card-deco">
-        <svg width="340" height="340" viewBox="0 0 340 340" style="bottom:-40px;right:-40px;">
+        <svg width="340" height="340" viewBox="0 0 340 340" style="bottom:-40px;right:-40px;" aria-hidden="true">
           <circle cx="170" cy="170" r="160" fill="none" stroke="#00ffe7" stroke-width="1"/>
           <circle cx="170" cy="170" r="110" fill="none" stroke="#00ffe7" stroke-width="1" stroke-dasharray="6 10"/>
           <circle cx="170" cy="170" r="60"  fill="none" stroke="#00ffe7" stroke-width="1"/>
@@ -493,14 +468,14 @@ footer{padding:clamp(1.1rem,3vw,2rem) var(--px);border-top:1px solid var(--gb);
         <div class="card-tag">E-Commerce / Shopify</div>
         <div class="card-title">ROKIOVERTIME</div>
         <div class="card-desc">A high-end fashion marketplace with immersive product photography, animated transitions, and sub-2s load times.</div>
-        <a href="https://www.Rokiovertime.com" class="card-lnk">View Project <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+        <a href="https://www.Rokiovertime.com" class="card-lnk" target="_blank" rel="noopener noreferrer" aria-label="View ROKIOVERTIME Shopify project">View Project <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
       </div>
     </div>
 
     <div class="project-card reveal d1">
       <div class="card-bg cb2"></div>
       <div class="card-deco">
-        <svg width="260" height="260" viewBox="0 0 260 260" style="top:-20px;left:-20px;">
+        <svg width="260" height="260" viewBox="0 0 260 260" style="top:-20px;left:-20px;" aria-hidden="true">
           <rect x="20" y="20" width="220" height="220" fill="none" stroke="#ff2d78" stroke-width="1" transform="rotate(15 130 130)"/>
           <rect x="50" y="50" width="160" height="160" fill="none" stroke="#ff2d78" stroke-width="1" stroke-dasharray="4 8" transform="rotate(30 130 130)"/>
         </svg>
@@ -509,14 +484,14 @@ footer{padding:clamp(1.1rem,3vw,2rem) var(--px);border-top:1px solid var(--gb);
         <div class="card-tag">Car Detailing / Dashboard</div>
         <div class="card-title">CME Detailing</div>
         <div class="card-desc">Real-time analytics &amp; SEO that saved this business.</div>
-        <a href="https://cmedetailing.net" class="card-lnk">View Project <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+        <a href="https://cmedetailing.net" class="card-lnk" target="_blank" rel="noopener noreferrer" aria-label="View CME Detailing project">View Project <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
       </div>
     </div>
 
     <div class="project-card reveal d2">
       <div class="card-bg cb3"></div>
       <div class="card-deco">
-        <svg width="200" height="200" viewBox="0 0 200 200" style="top:10px;right:10px;">
+        <svg width="200" height="200" viewBox="0 0 200 200" style="top:10px;right:10px;" aria-hidden="true">
           <polygon points="100,10 190,55 190,145 100,190 10,145 10,55" fill="none" stroke="#00ffe7" stroke-width="1"/>
           <polygon points="100,35 165,68 165,132 100,165 35,132 35,68" fill="none" stroke="#00ffe7" stroke-width=".5" stroke-dasharray="3 6"/>
         </svg>
@@ -525,14 +500,14 @@ footer{padding:clamp(1.1rem,3vw,2rem) var(--px);border-top:1px solid var(--gb);
         <div class="card-tag">Nutrition / B2B Sales</div>
         <div class="card-title">Nutraviva</div>
         <div class="card-desc">Bold brand identity and award-worthy site for a leading nutrition business.</div>
-        <a href="https://www.nutraviva.com.au" class="card-lnk">View Project <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+        <a href="https://www.nutraviva.com.au" class="card-lnk" target="_blank" rel="noopener noreferrer" aria-label="View Nutraviva website project">View Project <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
       </div>
     </div>
 
     <div class="project-card reveal d3">
       <div class="card-bg cb4"></div>
       <div class="card-deco">
-        <svg width="400" height="300" viewBox="0 0 400 300" style="bottom:-30px;left:0;">
+        <svg width="400" height="300" viewBox="0 0 400 300" style="bottom:-30px;left:0;" aria-hidden="true">
           <line x1="0" y1="150" x2="400" y2="150" stroke="#f5e642" stroke-width=".5" opacity=".5"/>
           <line x1="200" y1="0" x2="200" y2="300" stroke="#f5e642" stroke-width=".5" opacity=".5"/>
           <path d="M0,150 Q50,80 100,150 T200,150 T300,150 T400,150" fill="none" stroke="#f5e642" stroke-width="1"/>
@@ -540,10 +515,10 @@ footer{padding:clamp(1.1rem,3vw,2rem) var(--px);border-top:1px solid var(--gb);
         </svg>
       </div>
       <div class="card-content">
-        <div class="card-tag">It's your time to shine</div>
+        <div class="card-tag">It&#8217;s your time to shine</div>
         <div class="card-title">Your Turn</div>
         <div class="card-desc">Whatever your heart can desire!</div>
-        <a href="#cta" class="card-lnk">Get in Touch <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
+        <a href="#cta" class="card-lnk">Get in Touch <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg></a>
       </div>
     </div>
 
@@ -552,9 +527,9 @@ footer{padding:clamp(1.1rem,3vw,2rem) var(--px);border-top:1px solid var(--gb);
 
 <div class="glow-line"></div>
 
-<!-- ── SKILLS ── -->
+<!-- SKILLS -->
 <section id="skills">
-  <div class="sec-label reveal">// 003 — Skills</div>
+  <div class="sec-label reveal">// 003 &#8212; Skills</div>
   <div class="skills-wrap">
     <div>
       <h2 class="sec-title reveal" style="margin-bottom:clamp(1.5rem,3vw,3rem)">My<br><span class="outline">Stack</span></h2>
@@ -565,7 +540,8 @@ footer{padding:clamp(1.1rem,3vw,2rem) var(--px);border-top:1px solid var(--gb);
         <div class="sk-item reveal d1"><span class="sk-name">Shopify / WP</span><span class="sk-lvl">Expert</span></div>
       </div>
     </div>
-    <div class="sk-bars reveal d2">
+    <!-- sk-bars has NO reveal class — triggered directly by the observer below -->
+    <div class="sk-bars" id="sk-bars-trigger">
       <div><div class="sk-bar-head"><span>CSS &amp; Animation</span><span>98%</span></div>
         <div class="sk-track"><div class="sk-fill" style="--w:98%"></div></div></div>
       <div><div class="sk-bar-head"><span>JavaScript / ES6+</span><span>95%</span></div>
@@ -584,57 +560,62 @@ footer{padding:clamp(1.1rem,3vw,2rem) var(--px);border-top:1px solid var(--gb);
 
 <div class="glow-line"></div>
 
-<!-- ── PROCESS ── -->
+<!-- PROCESS -->
 <section id="process">
   <div class="sec-header reveal">
     <div>
-      <div class="sec-label">// 004 — How I Work</div>
+      <div class="sec-label">// 004 &#8212; How I Work</div>
       <h2 class="sec-title">The <span class="outline">Process</span></h2>
     </div>
   </div>
   <div class="proc-grid">
     <div class="proc-step reveal">
-      <div class="step-n">01</div><div class="step-ic">🔍</div>
+      <div class="step-n">01</div><div class="step-ic">&#128269;</div>
       <div class="step-ti">Discover</div>
       <p class="step-de">Deep dive into your brand, goals, and users. I learn what makes your business tick before a single line of code is written.</p>
     </div>
     <div class="proc-step reveal d1">
-      <div class="step-n">02</div><div class="step-ic">✏️</div>
+      <div class="step-n">02</div><div class="step-ic">&#9999;&#65039;</div>
       <div class="step-ti">Design</div>
       <p class="step-de">Wireframes to high-fidelity Figma prototypes. Every screen crafted with intention, hierarchy, and visual storytelling.</p>
     </div>
     <div class="proc-step reveal d2">
-      <div class="step-n">03</div><div class="step-ic">⚡</div>
+      <div class="step-n">03</div><div class="step-ic">&#9889;</div>
       <div class="step-ti">Build</div>
       <p class="step-de">Pixel-perfect implementation with clean, maintainable code. Obsessive attention to performance, accessibility, and detail.</p>
     </div>
     <div class="proc-step reveal d3">
-      <div class="step-n">04</div><div class="step-ic">🚀</div>
+      <div class="step-n">04</div><div class="step-ic">&#128640;</div>
       <div class="step-ti">Launch</div>
-      <p class="step-de">Thorough QA, speed optimisation, then deployment. I don't disappear after launch — ongoing support is standard.</p>
+      <p class="step-de">Thorough QA, speed optimisation, then deployment. I don&#8217;t disappear after launch &#8212; ongoing support is standard.</p>
     </div>
   </div>
 </section>
 
-<!-- ── CTA ── -->
+<!-- CTA -->
 <section id="cta">
-  <h2 class="cta-h reveal">Let's Build<br><span>Something</span><br>Extraordinary</h2>
-  <p class="cta-sub reveal d1">Have a project in mind? I'd love to hear about it. Let's make something the internet hasn't seen before.</p>
+  <h2 class="cta-h reveal">Let&#8217;s Build<br><span>Something</span><br>Extraordinary</h2>
+  <p class="cta-sub reveal d1">Have a project in mind? I&#8217;d love to hear about it. Let&#8217;s make something the internet hasn&#8217;t seen before.</p>
   <div class="cta-act reveal d2">
-    <a href="mailto:krausemax44@gmail.com" class="btn btn-solid">Start a Project</a>
-     <a href="tel:+61490365553" class="btn btn-solid">Call Me</a>
+    <a href="mailto:hello@max.dev" class="btn btn-solid">Start a Project</a>
+    <a href="tel:+61490365553" class="btn btn-solid">Call Me</a>
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
+<!-- FOOTER -->
 <footer>
-  <span>© 2026 MAX — WEB DEVELOPER</span>
-  <span>BATHURST, AU</span>
+  <span>&#169; 2026 MAX &#8212; WEB DEVELOPER</span>
+  <address style="font-style:normal;display:contents;">
+    <span>BATHURST, NSW, AU</span>
+    <a href="tel:+61490365553">+61 490 365 553</a>
+  </address>
   <span>MADE WITH OBSESSION</span>
 </footer>
 
 <script>
-/* CURSOR */
+/* ══════════════════════════════════════
+   CURSOR
+══════════════════════════════════════ */
 const cur = document.getElementById('cursor');
 const rng = document.getElementById('cursor-ring');
 if(cur && rng && window.matchMedia('(pointer:fine)').matches){
@@ -648,71 +629,114 @@ if(cur && rng && window.matchMedia('(pointer:fine)').matches){
   })();
   document.querySelectorAll('a,.btn,.project-card,.sk-item,.proc-step,.stat').forEach(el=>{
     el.addEventListener('mouseenter',()=>{rng.style.transform='translate(-50%,-50%) scale(2.2)';rng.style.borderColor='var(--magenta)';});
-    el.addEventListener('mouseleave',()=>{rng.style.transform='translate(-50%,-50%) scale(1)'; rng.style.borderColor='var(--cyan)';});
+    el.addEventListener('mouseleave',()=>{rng.style.transform='translate(-50%,-50%) scale(1)';rng.style.borderColor='var(--cyan)';});
   });
 }
 
-/* PARTICLE BG — fewer particles on mobile for perf */
-const canvas=document.getElementById('bg-canvas'), ctx=canvas.getContext('2d');
+/* ══════════════════════════════════════
+   PARTICLE BG
+══════════════════════════════════════ */
+const canvas=document.getElementById('bg-canvas'),ctx=canvas.getContext('2d');
 let W,H;
 function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
 resize(); window.addEventListener('resize',resize);
-
-const N = W<600?50:110;
-const pts = Array.from({length:N},()=>({
-  x:Math.random()*W, y:Math.random()*H,
-  vx:(Math.random()-.5)*.25, vy:(Math.random()-.5)*.25,
-  r:Math.random()*1.1+.2, a:Math.random()*.4+.1,
+const N=W<600?50:110;
+const pts=Array.from({length:N},()=>({
+  x:Math.random()*W,y:Math.random()*H,
+  vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,
+  r:Math.random()*1.1+.2,a:Math.random()*.4+.1,
   c:Math.random()>.7?'0,255,231':'255,255,255'
 }));
-const LINK = W<600?80:120;
-
+const LINK=W<600?80:120;
 (function draw(){
   ctx.clearRect(0,0,W,H);
   pts.forEach(p=>{
     p.x+=p.vx; p.y+=p.vy;
     if(p.x<0||p.x>W)p.vx*=-1;
     if(p.y<0||p.y>H)p.vy*=-1;
-    ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(${p.c},${p.a})`; ctx.fill();
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${p.c},${p.a})`;ctx.fill();
   });
   for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
-    const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.hypot(dx,dy);
+    const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.hypot(dx,dy);
     if(d<LINK){
-      ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y);
-      ctx.strokeStyle=`rgba(0,255,231,${.08*(1-d/LINK)})`; ctx.lineWidth=.5; ctx.stroke();
+      ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);
+      ctx.strokeStyle=`rgba(0,255,231,${.08*(1-d/LINK)})`;ctx.lineWidth=.5;ctx.stroke();
     }
   }
   requestAnimationFrame(draw);
 })();
 
-/* SCROLL REVEAL */
-const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible');}),{threshold:.08});
-document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+/* ══════════════════════════════════════
+   UNIFIED SCROLL ANIMATION
+   — One observer handles reveal, count-up,
+     and skill bars so nothing races.
+══════════════════════════════════════ */
 
-/* COUNT UP */
-const co=new IntersectionObserver(e=>e.forEach(x=>{
-  if(!x.isIntersecting)return;
-  const el=x.target,t=+el.dataset.count;
-  let v=0,s=t/80;
-  const r=()=>{v+=s;if(v>=t){el.textContent=t+'+';return;}el.textContent=Math.floor(v);requestAnimationFrame(r);};
-  r(); co.unobserve(el);
-}),{threshold:.3});
-document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
+// Step 1: mark body so CSS hides .reveal elements
+document.body.classList.add('js-ready');
 
-/* SKILL BARS */
-const bo=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('on');}),{threshold:.3});
-document.querySelectorAll('.sk-fill').forEach(b=>bo.observe(b));
+function countUp(el){
+  const target = +el.dataset.count;
+  // reset to 0 before animating
+  el.textContent = '0';
+  let val = 0;
+  const step = target / 80;
+  (function tick(){
+    val += step;
+    if(val >= target){ el.textContent = target + '+'; return; }
+    el.textContent = Math.floor(val);
+    requestAnimationFrame(tick);
+  })();
+}
 
-/* HAMBURGER */
-const ham=document.getElementById('ham'), mob=document.getElementById('mob');
+function fireSkillBars(container){
+  container.querySelectorAll('.sk-fill').forEach(bar => {
+    bar.style.width = bar.style.getPropertyValue('--w');
+  });
+}
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(!entry.isIntersecting) return;
+    const el = entry.target;
+
+    // 1. Fade in
+    el.classList.add('visible');
+
+    // 2. Count-up: fire on any [data-count] inside this element
+    el.querySelectorAll('[data-count]').forEach(countUp);
+
+    observer.unobserve(el);
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Skill bars: separate observer on the bars container itself (no reveal class)
+const barsEl = document.getElementById('sk-bars-trigger');
+if(barsEl){
+  new IntersectionObserver(entries => {
+    if(entries[0].isIntersecting){
+      fireSkillBars(barsEl);
+      entries[0].target._barObserver && entries[0].target._barObserver.disconnect();
+    }
+  }, { threshold: 0.2 }).observe(barsEl);
+}
+
+/* ══════════════════════════════════════
+   HAMBURGER
+══════════════════════════════════════ */
+const ham=document.getElementById('ham'),mob=document.getElementById('mob');
 ham.addEventListener('click',()=>{
   const o=mob.classList.toggle('open');
   ham.classList.toggle('open',o);
   document.body.style.overflow=o?'hidden':'';
 });
 document.querySelectorAll('.ml').forEach(l=>l.addEventListener('click',()=>{
-  mob.classList.remove('open'); ham.classList.remove('open'); document.body.style.overflow='';
+  mob.classList.remove('open');
+  ham.classList.remove('open');
+  document.body.style.overflow='';
 }));
 </script>
 </body>
