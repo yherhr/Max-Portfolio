@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yherhr.github.io/Max-Portfolio/sitemap.xml
