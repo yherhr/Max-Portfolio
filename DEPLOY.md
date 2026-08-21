@@ -125,21 +125,28 @@ drop every single one and the gallery would go blank with no error anywhere.
 
 ## Before you make it public
 
-```bash
-./tools/check-embeds.sh
-```
-
-This tells you which client sites will actually render inside an iframe. Anything
-reported `BLOCKED` needs `data-embed="live"` changed to `data-embed="poster"` on
-that card's `.frame__view`, otherwise the panel shows a browser error page.
-Details in README §4.
-
-Optional but worth it:
+Capture the client-site screenshots:
 
 ```bash
 npm i -D playwright && npx playwright install chromium
-node tools/shots.mjs          # poster screenshots into img/work/
+node tools/shots.mjs
 ```
+
+Not blocking — a card with no screenshot yet falls back to a clean name-and-domain
+panel, so it ships fine either way. But it's a two-minute job and the cards are
+the strongest thing on the page with real screenshots in them.
+
+## Adding photos later
+
+```bash
+./tools/optimise-images.sh ~/Pictures/some-shoot studio
+./tools/build-gallery.sh
+git add -A && git commit -m "Add shoot" && git push
+```
+
+Optimise first — it's the difference between 500 MB and about 50 MB, and Pages
+caps a published site at 1 GB. Full detail in README §5, including why Git LFS
+is not the answer here.
 
 ---
 

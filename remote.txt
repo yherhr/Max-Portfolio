@@ -1,0 +1,27 @@
+# Photos that live somewhere other than img/gallery/ — one per line:
+#
+#     url | category | label
+#
+# build-gallery.sh appends these to the manifest after scanning the folders, so
+# images hosted elsewhere survive a rebuild. Lines starting with # are ignored.
+#
+# These sixteen are still served from the Krause_Photography repo via jsDelivr.
+# As you localise them (copy the file into img/gallery/<category>/), delete the
+# matching line here — otherwise it'll appear twice.
+
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC5307.jpg   | studio  | Studio Modelling
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC5448.jpg   | studio  | Studio Modelling
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC6093.jpg   | studio  | Studio Modelling
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC6147.jpg   | studio  | Studio Modelling
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC6102.jpg   | studio  | Studio Modelling
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC9706.jpg   | studio  | Studio Modelling
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC9696.jpg   | studio  | Studio Modelling
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC1997.jpg   | gym     | Gym Modelling
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC1739-4.jpg | gym     | Gym Modelling
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC4999.jpg   | outdoor | Outdoor Modelling
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC3028.jpg   | family  | Family Moments
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC4042.jpg   | family  | Family Moments
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC0936.jpg   | product | Product Photography
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC0806.jpg   | product | Product Photography
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC0835.jpg   | product | Product Photography
+https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC0933.jpg   | product | Product Photography

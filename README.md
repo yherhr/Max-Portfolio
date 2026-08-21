@@ -17,7 +17,7 @@ Static HTML/CSS/JS. No build step, no dependencies, no framework.
 | Controls | Square buttons, hard corners | Pill buttons and chips, `999px` — your actual pattern |
 | Hero | Canvas line drawing | Full-bleed photograph, slow zoom, gradient scrim, outlined second line — your actual hero |
 | Imagery | Text-only cards | Photographs throughout: hero, three service bands, 16-frame masonry gallery, portrait |
-| Client work | Text descriptions | **Live iframe embeds** in browser chrome |
+| Client work | Text descriptions | **Screenshots** in browser chrome, linking out |
 | Message | "Three disciplines" | **End to end for any business** — a five-stage chain is now the first thing under the hero |
 
 The gold is gone completely — `grep` for the old hex values returns nothing.
@@ -35,8 +35,11 @@ automation.html     capability, platforms, background
 404.html            themed, and resolves its own base path (see below)
 css/mkm.css         one stylesheet
 js/mkm.js           one script, no libraries
-tools/              build-sitemap.sh · set-site-url.sh · check-embeds.sh
-                    shots.mjs · optimise-images.sh
+js/gallery-data.js  generated gallery manifest — the only place photos are listed
+tools/              build-gallery.sh · optimise-images.sh · shots.mjs
+                    build-sitemap.sh · set-site-url.sh · check-embeds.sh
+img/gallery/        your photo library, one folder per category
+img/gallery/remote.txt  images hosted elsewhere, merged into the manifest
 .github/workflows/  optional Pages deploy — rebuilds the sitemap, audits links
 img/work/           poster screenshots go here (empty for now — see §4)
 .nojekyll           stops Jekyll eating any file starting with _ (your photos)
@@ -77,58 +80,168 @@ and from `file://`.
 
 ---
 
-## 4. The client-site embeds — read this before launch
+## 4. Client site cards
 
-Each card renders the client's real site in an iframe at 1440px wide, scaled by JS to
-fit the card. They build lazily on scroll, so four third-party sites don't load on
-first paint.
+The cards show **screenshots**, in browser chrome, linking straight out to the live
+site. Shopify sends `X-Frame-Options`, so an iframe was never going to work there —
+and worse, a blocked site still fires `load` on its error page, so there's no reliable
+way to detect it in JS and swap in a fallback. A screenshot always renders.
 
-**The catch:** a site that sends `X-Frame-Options: DENY`/`SAMEORIGIN`, or a CSP with
-`frame-ancestors`, cannot be framed at all — and the browser still fires `load` on the
-error page, so JS can't reliably detect it. That means a blocked site would show
-Chrome's grey error page inside your card. I could not test this from my sandbox
-(outbound network is restricted), so **run the checker before you launch**:
-
-```bash
-./tools/check-embeds.sh
-```
-
-For anything it reports `BLOCKED`, change that card's `data-embed="live"` to
-`data-embed="poster"` on the `.frame__view` element. The card then shows a clean
-"open in a new tab" panel instead. Shopify storefronts are the most likely to block,
-so I'd expect Rokiovertime to be the one that needs it.
-
-**Posters.** Each card also references `img/work/<slug>.jpg`. If the file is missing the
-`onerror` removes it cleanly, so nothing broken shows — but generating them is worth it,
-both as the poster behind a live frame and as the fallback for a blocked one:
+Capture them with:
 
 ```bash
 npm i -D playwright && npx playwright install chromium
 node tools/shots.mjs
 ```
 
----
+Writes `img/work/<slug>.jpg` at 1440×900, roughly 2× the size the cards display at, so
+they stay sharp on a retina screen. The script dismisses the usual cookie and
+newsletter popups first so they don't get baked into the shot.
 
-## 5. Images
+**You can ship before running it.** A missing screenshot falls back to a clean panel
+with the business name and domain on the surface colour — it reads as deliberate, not
+broken. A partial run is safe for the same reason.
 
-The gallery, hero and bands load from jsDelivr, the **same CDN your media site already
-uses**:
+If you ever want a genuinely live frame for a site you've confirmed allows it, run
+`./tools/check-embeds.sh` and set `data-embed="live"` on that card's `.frame__view`.
+The iframe code is still there, just opt-in now, and it falls back to the screenshot if
+the frame never loads.
+
+## 5. Adding media — the gallery is now data-driven
+
+Nothing about the gallery is hardcoded any more. It reads `js/gallery-data.js`, which
+is generated from your folders. Categories, chip labels, counts and masonry row spans
+all come from that one file, so **adding photos never means editing HTML or
+JavaScript.**
 
 ```
-https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/_DSC5307.jpg
+img/gallery/
+  studio/     gym/       outdoor/
+  family/     product/   business/     <- any folder becomes a chip
 ```
 
-That's faster than GitHub Pages and already cached, but it does mean the
-`Krause_Photography` repo has to stay published. To localise: copy the JPEGs into
-`img/`, then change the `CDN` constant at the top of `js/mkm.js` and find-and-replace
-the same base URL across the four HTML files.
+The workflow, start to finish:
 
-Those originals are full-size camera JPEGs. `./tools/optimise-images.sh <folder>`
-resizes the longest edge to 1600px at quality 80 — typically a 70–80% payload cut with
-no visible difference at the sizes the site actually displays. Worth doing; the gallery
-is the heaviest thing on the page by a wide margin.
+```bash
+./tools/optimise-images.sh ~/Pictures/studio-shoot-aug studio
+./tools/build-gallery.sh
+git add -A && git commit -m "Add August studio shoot" && git push
+```
 
----
+Drop a new folder in and it becomes a new filter chip with the right count, no other
+changes. I tested that: adding a `business/` folder produced a `Business 2` chip on its
+own.
+
+### What's in the gallery now
+
+47 frames across eight categories:
+
+| Category | Count | Source |
+|---|---|---|
+| Apparel & Brand | 17 | local |
+| Studio | 7 | jsDelivr |
+| Gym | 6 | 4 local, 2 jsDelivr |
+| Automotive | 5 | local |
+| Product | 4 | jsDelivr |
+| Family | 3 | 1 local, 2 jsDelivr |
+| Combat Sport | 3 | local |
+| Outdoor | 2 | 1 local, 1 jsDelivr |
+
+Chips are ordered by set size, so the strongest body of work leads. Three of
+those categories are new — apparel, automotive and combat sport — and they widen
+what the site can credibly claim considerably. Worth noting on the web side too:
+the apparel set is a Shopify storefront's product photography and the automotive
+set is detailing work, which is exactly the pairing the "shoot and site in one
+job" pitch rests on.
+
+### The 31 you sent: 368 MB → 7.9 MB
+
+Those were 4000×6000 camera originals averaging 12 MB each. Resized to 2000px on
+the longest edge at quality 82, EXIF stripped, progressive, 4:2:2 chroma:
+
+```
+368 MB  ->  7.9 MB     98% smaller
+```
+
+Nothing visible was lost — the gallery displays these around 500px wide and the
+lightbox tops out near 1600px tall, so 2000px is still comfortably more than any
+screen uses. The whole site is now about 8 MB, against a 1 GB Pages ceiling. At
+this ratio your remaining 500 MB lands somewhere near 11 MB, so the ceiling is
+not going to be your problem.
+
+Do the same for the next batch with:
+
+```bash
+./tools/optimise-images.sh ~/Pictures/next-shoot apparel
+./tools/build-gallery.sh
+```
+
+### Images hosted elsewhere: img/gallery/remote.txt
+
+`build-gallery.sh` regenerates the manifest from your folders, which would have
+silently dropped the 16 photos still served from the Krause_Photography repo. So
+it now also reads `img/gallery/remote.txt`:
+
+```
+url | category | label
+```
+
+Those 16 lines are in there. As you localise each one — copy the file into
+`img/gallery/<category>/` — delete its line, or it'll show up twice.
+
+### Model releases
+
+Several of these are identifiable people. That's normal for a lookbook you shot
+for your own brand, but a commercial site is a different use from a shoot
+deliverable. Worth a quick check that your releases cover web publication before
+launch — it's the kind of thing nobody thinks about until someone asks.
+
+### The limits, for when the library keeps growing
+
+| | Limit | Consequence |
+|---|---|---|
+| GitHub Pages published site | **1 GB hard** | Site stops publishing |
+| GitHub Pages bandwidth | 100 GB/month soft | Throttling, then an email — not a bill |
+| GitHub repo | 1 GB recommended, 100 MB per file hard | Push rejected over 100 MB |
+| jsDelivr `/gh/` | **20 MB per file, 50 MB per repo** | 403 from the CDN |
+
+Two things worth knowing:
+
+- **jsDelivr won't carry a big library.** The 50 MB per-repo cap means the CDN
+  you use today stops working once the media repo grows. Optimised media served
+  straight from Pages is the simpler path, and Pages is already CDN-backed.
+- **Don't reach for Git LFS.** GitHub Pages doesn't resolve LFS objects — it
+  serves the pointer text file instead, so every image silently breaks. It looks
+  like the obvious answer for large media and it's the one thing that definitely
+  won't work here.
+
+**If you do outgrow Pages** — video, or a library past a few hundred MB even
+optimised — the move is object storage with a CDN in front, not a bigger repo.
+Cloudflare R2 stands out because egress is free (10 GB storage free, then about
+$0.015/GB/month); Bunny.net is similarly cheap and simpler to set up. You'd then
+list the CDN URLs in `remote.txt`, which is exactly what that file is for.
+
+**Video:** don't self-host it on this stack. A single 1080p minute is 30–60 MB
+and one viral post would eat the bandwidth allowance. Unlisted YouTube or Vimeo,
+embedded.
+
+One more, since this is a business site: GitHub's Pages terms say it isn't for
+sites *primarily* directed at facilitating commercial transactions. A marketing
+and portfolio site is normal use; a storefront taking payments would not be.
+
+### Getting the files to me
+
+You don't need to send me 500 MB — I don't need the images, only their names and
+categories. If you want me to wire something up, a folder listing is enough:
+
+```bash
+cd img/gallery && find . -type f | sort > ../../media-list.txt
+```
+
+Paste or upload that. Though with `build-gallery.sh` in place you mostly won't need
+to — the point of the manifest is that you can add media yourself without touching
+code. Send files only when you want me to pick the categories or promote a shot
+into the hero.
 
 ## 6. Decisions I've left to you
 

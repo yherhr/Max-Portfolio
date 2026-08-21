@@ -1,0 +1,68 @@
+# Deploy to GitHub Pages, regenerating sitemap.xml on every push so it can never
+# drift from the pages that actually exist (including services/).
+#
+# To use this: Settings -> Pages -> Build and deployment -> Source: GitHub Actions.
+# If you'd rather keep it simple, delete this file and set Source to
+# "Deploy from a branch" instead — the site is plain static files and needs no
+# build step. You'd then just have to run ./tools/build-sitemap.sh yourself
+# whenever you add or remove a page.
+
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Regenerate sitemap
+        run: |
+          chmod +x tools/build-sitemap.sh
+          ./tools/build-sitemap.sh
+
+      - name: Check every internal link resolves
+        run: |
+          set -e
+          missing=0
+          for f in $(find . -name '*.html' -not -path './node_modules/*'); do
+            dir=$(dirname "$f")
+            for href in $(grep -o 'href="[^"]*"' "$f" | sed 's/href="//; s/"$//'); do
+              case "$href" in http*|mailto:*|tel:*|\#*|data:*) continue ;; esac
+              target="${href%%#*}"
+              [ -z "$target" ] && continue
+              if [ ! -e "$dir/$target" ]; then
+                echo "::warning file=$f::missing link target -> $target"
+                missing=$((missing+1))
+              fi
+            done
+          done
+          echo "$missing missing link target(s)"
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
