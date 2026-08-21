@@ -136,11 +136,25 @@ Not blocking — a card with no screenshot yet falls back to a clean name-and-do
 panel, so it ships fine either way. But it's a two-minute job and the cards are
 the strongest thing on the page with real screenshots in them.
 
+## After ANY change to css/ or js/
+
+```bash
+./tools/stamp-assets.sh
+```
+
+This appends a content hash to the css and js links (`css/mkm.css?v=a1b2c3d4`).
+Without it, a browser or CDN holding the previous stylesheet will apply it to
+your new HTML — any rule you added renders unstyled, text dumps inline and icons
+blow up to full size. It looks exactly like a code bug and isn't one. The
+included Actions workflow runs this automatically; run it yourself if you deploy
+from a branch.
+
 ## Adding photos later
 
 ```bash
 ./tools/optimise-images.sh ~/Pictures/some-shoot studio
 ./tools/build-gallery.sh
+./tools/stamp-assets.sh
 git add -A && git commit -m "Add shoot" && git push
 ```
 

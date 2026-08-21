@@ -29,6 +29,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Cache-bust css/js links
+        run: |
+          chmod +x tools/stamp-assets.sh
+          ./tools/stamp-assets.sh
+
       - name: Regenerate sitemap
         run: |
           chmod +x tools/build-sitemap.sh
