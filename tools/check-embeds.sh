@@ -5,9 +5,10 @@
 #
 #   ./tools/check-embeds.sh
 #
-# For anything reported BLOCKED, set data-embed="poster" on that card's
-# .frame__view in index.html / web.html, and generate a screenshot with
-# tools/shots.mjs so the card still shows something.
+# The cards ship as screenshots (data-embed="poster"), which always works, so
+# you do not need this to launch. Run it only if you want to switch a card to a
+# live iframe: anything reported OK can safely take data-embed="live" on its
+# .frame__view. Anything BLOCKED must stay a screenshot.
 
 SITES=(
   "https://www.rokiovertime.com"

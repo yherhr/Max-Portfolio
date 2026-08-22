@@ -152,11 +152,48 @@ from a branch.
 ## Adding photos later
 
 ```bash
-./tools/optimise-images.sh ~/Pictures/some-shoot studio
-./tools/build-gallery.sh
-./tools/stamp-assets.sh
+./tools/optimise-images.sh ~/Pictures/some-shoot studio   # 2000px originals
+./tools/build-thumbs.sh                                   # 400/700/1000/1400 variants
+./tools/build-gallery.sh                                  # manifest + srcset
+./tools/stamp-assets.sh                                   # cache-bust
 git add -A && git commit -m "Add shoot" && git push
 ```
+
+The thumbs step is what keeps the gallery fast — skip it and the browser
+downloads 2000px files for 190px phone tiles.
+
+## Moving the media to jsDelivr
+
+Optional. It won't make much difference to speed (Pages is already CDN-backed);
+what it buys you is a site repo that stays small as the library grows.
+
+```bash
+# 1. create a public media repo that mirrors the img/gallery structure
+mkdir mkm-media && cd mkm-media
+git init -b main
+mkdir -p img
+cp -r ../Max-Portfolio/img/gallery img/
+git add -A && git commit -m "Gallery media"
+git remote add origin https://github.com/yherhr/mkm-media.git
+git push -u origin main
+
+# 2. point the site at it
+cd ../Max-Portfolio
+./tools/use-cdn.sh https://cdn.jsdelivr.net/gh/yherhr/mkm-media@main
+```
+
+`use-cdn.sh` rewrites the manifest, re-stamps the asset links, and then checks
+that a sample of the generated URLs actually returns 200 — a manifest full of
+404s looks exactly like a broken gallery, so it refuses to let you ship one
+quietly. `./tools/use-cdn.sh --local` puts it back.
+
+The repo must be **public** — jsDelivr can't read private ones — and stay under
+jsDelivr's caps: 20 MB per file, 50 MB per repo. The current gallery is about
+16 MB all in, so there's room, but check before the next big batch.
+
+Once it's on the CDN you can delete `img/gallery/` from the site repo. Keep the
+originals somewhere off GitHub either way; 2000px files are a working copy, not
+an archive.
 
 Optimise first — it's the difference between 500 MB and about 50 MB, and Pages
 caps a published site at 1 GB. Full detail in README §5, including why Git LFS

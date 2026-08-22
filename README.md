@@ -36,11 +36,16 @@ automation.html     capability, platforms, background
 css/mkm.css         one stylesheet
 js/mkm.js           one script, no libraries
 js/gallery-data.js  generated gallery manifest — the only place photos are listed
-tools/              build-gallery.sh · optimise-images.sh · shots.mjs
-                    stamp-assets.sh · build-sitemap.sh · set-site-url.sh
-                    check-embeds.sh
+tools/              optimise-images.sh · build-thumbs.sh · build-gallery.sh
+                    use-cdn.sh · stamp-assets.sh · shots.mjs
+                    build-sitemap.sh · set-site-url.sh · check-embeds.sh
 img/gallery/        your photo library, one folder per category
+img/gallery/thumbs/     responsive variants (generated)
 img/gallery/remote.txt  images hosted elsewhere, merged into the manifest
+img/gallery/cdn.txt     optional CDN base URL for every gallery path
+img/gallery/cdn.txt     optional CDN base URL for every gallery path
+img/gallery/cdn.txt     optional CDN base URL for every gallery path
+img/gallery/*/thumbs/   responsive variants (400/700/1000/1400px)
 .github/workflows/  optional Pages deploy — rebuilds the sitemap, audits links
 img/work/           poster screenshots go here (empty for now — see §4)
 .nojekyll           stops Jekyll eating any file starting with _ (your photos)
@@ -131,7 +136,9 @@ The workflow, start to finish:
 
 ```bash
 ./tools/optimise-images.sh ~/Pictures/studio-shoot-aug studio
-./tools/build-gallery.sh
+./tools/build-thumbs.sh      # responsive variants
+./tools/build-gallery.sh     # regenerate the manifest
+./tools/stamp-assets.sh      # cache-bust, or browsers keep the old manifest
 git add -A && git commit -m "Add August studio shoot" && git push
 ```
 
@@ -161,27 +168,78 @@ the apparel set is a Shopify storefront's product photography and the automotive
 set is detailing work, which is exactly the pairing the "shoot and site in one
 job" pitch rests on.
 
-### The 31 you sent: 368 MB → 7.9 MB
+### The 31 you sent: 368 MB → 7.9 MB → 1.91 MB delivered
 
-Those were 4000×6000 camera originals averaging 12 MB each. Resized to 2000px on
-the longest edge at quality 82, EXIF stripped, progressive, 4:2:2 chroma:
+Those were 4000×6000 camera originals averaging 12 MB each. Two stages:
 
-```
-368 MB  ->  7.9 MB     98% smaller
-```
+**Stage 1 — optimise.** 2000px longest edge, quality 82, EXIF stripped:
+`368 MB → 7.9 MB`.
 
-Nothing visible was lost — the gallery displays these around 500px wide and the
-lightbox tops out near 1600px tall, so 2000px is still comfortably more than any
-screen uses. The whole site is now about 8 MB, against a 1 GB Pages ceiling. At
-this ratio your remaining 500 MB lands somewhere near 11 MB, so the ceiling is
-not going to be your problem.
+**Stage 2 — responsive variants.** 7.9 MB was still the whole gallery at full
+size on every device, which is what made it slow. Tiles display at roughly
+470px on desktop and 190px on a phone, so a 2000px file was 4× oversampled on
+desktop and 10× on mobile. `build-thumbs.sh` now generates 400 / 700 / 1000 /
+1400px variants and the manifest emits a `srcset`, so the browser downloads the
+size it actually needs:
 
-Do the same for the next batch with:
+| | before | after |
+|---|---|---|
+| Desktop 1440 @1x | 7.9 MB | **1.91 MB** |
+| Desktop 1440 @2x retina | 7.9 MB | **3.53 MB** |
+| Phone 390 @3x | 7.9 MB | **1.91 MB** |
+
+Measured by loading the page and scrolling the entire 47-frame gallery. Because
+tiles are lazy-loaded, the first screen is a fraction of that again. The
+lightbox still pulls the full 2000px file — that's the one place the pixels get
+used.
+
+Two supporting changes made those numbers possible:
+
+- The grid dropped to **one column below 400px**, which meant `sizes` resolved
+  to `100vw` on a 390px phone, and a 3× screen then demanded ~1170px per tile.
+  It's now one column only below 340px, so every real phone gets two columns
+  and asks for ~516px.
+- The width ladder is 400 / 700 / 1000 / 1400 rather than round numbers, chosen
+  to land just above what the layout actually requests at 1×, 2× and 3×.
+
+The whole flow when you add photos:
 
 ```bash
 ./tools/optimise-images.sh ~/Pictures/next-shoot apparel
+./tools/build-thumbs.sh
 ./tools/build-gallery.sh
+./tools/stamp-assets.sh
 ```
+
+### Serving from a CDN
+
+`img/gallery/cdn.txt` holds one line — a base URL every generated path is
+prefixed with. Blank means serve locally from this repo. Set it with:
+
+```bash
+./tools/use-cdn.sh https://cdn.jsdelivr.net/gh/yherhr/mkm-media@main
+./tools/use-cdn.sh --local        # to revert
+```
+
+That rewrites the manifest, re-stamps the asset links, and curl-checks a sample
+of the URLs — a manifest full of 404s looks exactly like a broken gallery, so
+it's worth catching at the point you change it.
+
+**`mkm-media.zip` is the media repo, ready to push.** It mirrors the
+`img/gallery/...` structure the URLs depend on, so don't flatten it. Create a
+**public** repo (jsDelivr can't read private ones), push, then run the command
+above.
+
+**Be honest with yourself about why you'd do this, though.** The speed problem
+was oversampling, and that's fixed regardless of where the files live. GitHub
+Pages is already served through a CDN, so moving to jsDelivr won't make much
+measurable difference on its own. What it does buy you is keeping ~17 MB of
+binaries out of the site repo and out of its git history — that matters as the
+library grows, and it's the reason to do it.
+
+If you do: pin a tag rather than `@main`. jsDelivr caches `@main` for 12 hours,
+so a replaced file can take that long to appear, whereas a tag is cached
+forever and never surprises you.
 
 ### Images hosted elsewhere: img/gallery/remote.txt
 

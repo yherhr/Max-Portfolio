@@ -6,7 +6,6 @@
 (function () {
   'use strict';
 
-  var CDN = 'https://cdn.jsdelivr.net/gh/yherhr/Krause_Photography@main/';
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $  = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
@@ -39,74 +38,102 @@
   })();
 
   /* ---------- 2. PHOTO GRID (masonry + filters + lightbox) ----------
-     Tiles are generated so the aspect ratios stay in one place and the
-     masonry row-spans can be computed from the real image dimensions.
+     Photos come from js/gallery-data.js (window.MKM_PHOTOS), which is generated
+     by tools/build-gallery.sh. Nothing about the gallery is hardcoded here:
+     categories, chip counts and row spans are all derived from that manifest,
+     so adding media never means editing markup.
   ------------------------------------------------------------------- */
-  var PHOTOS = [
-    ['_DSC5307.jpg', 'studio',  'Studio Modelling'],
-    ['_DSC5448.jpg', 'studio',  'Studio Modelling'],
-    ['_DSC6093.jpg', 'studio',  'Studio Modelling'],
-    ['_DSC6147.jpg', 'studio',  'Studio Modelling'],
-    ['_DSC6102.jpg', 'studio',  'Studio Modelling'],
-    ['_DSC9706.jpg', 'studio',  'Studio Modelling'],
-    ['_DSC9696.jpg', 'studio',  'Studio Modelling'],
-    ['_DSC1997.jpg', 'gym',     'Gym Modelling'],
-    ['_DSC1739-4.jpg', 'gym',   'Gym Modelling'],
-    ['_DSC4999.jpg', 'outdoor', 'Outdoor Modelling'],
-    ['_DSC3028.jpg', 'family',  'Family Moments'],
-    ['_DSC4042.jpg', 'family',  'Family Moments'],
-    ['_DSC0936.jpg', 'product', 'Product Photography'],
-    ['_DSC0806.jpg', 'product', 'Product Photography'],
-    ['_DSC0835.jpg', 'product', 'Product Photography'],
-    ['_DSC0933.jpg', 'product', 'Product Photography']
-  ];
-
+  var PHOTOS = Array.isArray(window.MKM_PHOTOS) ? window.MKM_PHOTOS : [];
+  var SIZES = '(max-width: 340px) 100vw, (max-width: 1000px) 50vw, 33vw';
   var visible = [];
 
   (function gallery() {
     var grid = $('#grid');
     if (!grid) return;
 
+    if (!PHOTOS.length) {
+      grid.innerHTML = '<p class="gal-meta">Gallery manifest missing — run ' +
+                       '<code>./tools/build-gallery.sh</code>.</p>';
+      return;
+    }
+
     var meta = $('#galMeta');
-    var chips = $$('.chip[data-cat]');
+    var bar = $('.gal-bar');
     var GAPROW = 6, GAP = 14;
 
+    /* ---- chips: built from whatever categories exist in the manifest ---- */
+    var order = [], counts = {}, labels = {};
+    PHOTOS.forEach(function (p) {
+      if (!counts[p.cat]) { counts[p.cat] = 0; order.push(p.cat); labels[p.cat] = p.label || p.cat; }
+      counts[p.cat]++;
+    });
+
+    function title(slug, label) {
+      // prefer a short human name: "Studio Modelling" -> "Studio"
+      var first = String(label || slug).split(' ')[0];
+      return first.charAt(0).toUpperCase() + first.slice(1);
+    }
+
+    // lead with the biggest bodies of work rather than folder order
+    order.sort(function (a, b) { return counts[b] - counts[a] || a.localeCompare(b); });
+
+    if (bar) {
+      bar.innerHTML = '';
+      var mk = function (cat, text, n, on) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'chip' + (on ? ' active' : '');
+        b.dataset.cat = cat;
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        b.innerHTML = text + '<span class="n">' + n + '</span>';
+        bar.appendChild(b);
+        return b;
+      };
+      mk('all', 'All', PHOTOS.length, true);
+      order.forEach(function (c) { mk(c, title(c, labels[c]), counts[c], false); });
+    }
+
+    /* ---- tiles ---- */
     PHOTOS.forEach(function (p, i) {
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'tile';
-      b.dataset.cat = p[1];
+      b.dataset.cat = p.cat;
       b.dataset.i = String(i);
-      b.setAttribute('aria-label', p[2] + ' — open full size');
+      b.setAttribute('aria-label', (p.label || 'Photograph') + ' — open full size');
+      // sizes mirrors the grid: 1 column under 340px, 2 up to 1000px, 3 above,
+      // inside a 1500px container. Without it the browser assumes 100vw and
+      // downloads the largest candidate every time.
       b.innerHTML =
-        '<img src="' + CDN + p[0] + '" alt="' + p[2] + ' — photograph by Max Krause"' +
-        ' loading="lazy" decoding="async">' +
-        '<span class="tile-cap"><span class="t">' + p[2] + '</span>' +
+        '<img src="' + p.src + '"' +
+        (p.srcset ? ' srcset="' + p.srcset + '" sizes="' + SIZES + '"' : '') +
+        ' alt="' + (p.label || 'Photograph') +
+        ' — photograph by Max Krause" loading="lazy" decoding="async"' +
+        (p.w && p.h ? ' width="' + p.w + '" height="' + p.h + '"' : '') + '>' +
+        '<span class="tile-cap"><span class="t">' + (p.label || '') + '</span>' +
         '<span class="s">Max K Media</span></span>';
       grid.appendChild(b);
 
       var img = b.querySelector('img');
       var span = function () {
         var w = b.clientWidth || 400;
-        var r = (img.naturalHeight && img.naturalWidth)
-          ? img.naturalHeight / img.naturalWidth
-          : 1.25;
-        b.style.gridRowEnd = 'span ' + Math.max(20, Math.round((w * r + GAP) / (GAPROW + GAP) * 1.0) + 1);
+        var r = (p.w && p.h) ? p.h / p.w
+              : (img.naturalWidth ? img.naturalHeight / img.naturalWidth : 1.25);
+        b.style.gridRowEnd = 'span ' + Math.max(20, Math.round((w * r + GAP) / (GAPROW + GAP)) + 1);
       };
-      img.addEventListener('load', span);
-      if (img.complete) span();
+      span();                                   // exact immediately when w/h are known
+      img.addEventListener('load', span);       // measured fallback otherwise
       b.__span = span;
     });
 
     var tiles = $$('.tile', grid);
-
     var relayout = function () { tiles.forEach(function (t) { if (t.__span) t.__span(); }); };
     window.addEventListener('resize', function () {
       clearTimeout(relayout.__t);
       relayout.__t = setTimeout(relayout, 160);
     });
 
-    var apply = function (cat) {
+    function apply(cat) {
       visible = [];
       tiles.forEach(function (t) {
         var on = cat === 'all' || t.dataset.cat === cat;
@@ -116,11 +143,14 @@
       if (meta) {
         meta.innerHTML = '<b>' + visible.length + '</b> ' +
           (visible.length === 1 ? 'frame' : 'frames') +
-          (cat === 'all' ? ' across five categories' : ' in this set');
+          (cat === 'all'
+            ? ' across ' + order.length + (order.length === 1 ? ' category' : ' categories')
+            : ' in this set');
       }
       requestAnimationFrame(relayout);
-    };
+    }
 
+    var chips = $$('.chip[data-cat]');
     chips.forEach(function (chip) {
       chip.addEventListener('click', function () {
         chips.forEach(function (c) { c.classList.remove('active'); c.setAttribute('aria-pressed', 'false'); });
@@ -132,7 +162,7 @@
 
     apply('all');
 
-    /* lightbox */
+    /* ---- lightbox ---- */
     var lb = $('#lb');
     if (!lb) return;
     var lbImg = $('.lb-img', lb), lbCap = $('.lb-cap', lb), lbCount = $('.lb-count', lb);
@@ -142,9 +172,10 @@
       if (!visible.length) return;
       pos = (p + visible.length) % visible.length;
       var ph = PHOTOS[visible[pos]];
-      lbImg.src = CDN + ph[0];
-      lbImg.alt = ph[2] + ' — photograph by Max Krause';
-      lbCap.innerHTML = '<b>' + ph[2] + '</b>';
+      lbImg.removeAttribute('srcset');
+      lbImg.src = ph.full || ph.src;
+      lbImg.alt = (ph.label || 'Photograph') + ' — photograph by Max Krause';
+      lbCap.innerHTML = '<b>' + (ph.label || '') + '</b>';
       lbCount.textContent = String(pos + 1).padStart(2, '0') + ' / ' + String(visible.length).padStart(2, '0');
     }
     function open(idx) {
@@ -189,32 +220,30 @@
     }, { passive: true });
   })();
 
-  /* ---------- 3. CLIENT SITE EMBEDS ----------
-     The iframe renders the real site at 1440px and is scaled down to fit the
-     card, so the desktop layout is what you see. Built lazily on scroll so
-     four third-party sites don't load on first paint.
+  /* ---------- 3. CLIENT SITE CARDS ----------
+     Screenshots are the default and need no JS at all — the <img> and its
+     onerror handle both the loaded and the not-yet-captured case.
 
-     Sites that send X-Frame-Options: DENY / SAMEORIGIN, or a CSP
-     frame-ancestors directive, cannot be framed at all. Those cards should be
-     set to data-embed="poster" — see tools/check-embeds.sh.
+     This block only runs for cards explicitly marked data-embed="live". Note
+     that a site sending X-Frame-Options or a CSP frame-ancestors directive
+     cannot be framed, and the browser still fires load on its error page, so
+     there is no reliable way to detect it from here. Only set live on sites
+     you have confirmed with tools/check-embeds.sh.
   ------------------------------------------------------------------------- */
   (function embeds() {
-    var views = $$('.frame__view');
+    var views = $$('.frame__view[data-embed="live"]');
     if (!views.length) return;
 
     var W = 1440;
 
     function fit(view) {
       var f = view.querySelector('iframe');
-      if (!f) return;
-      f.style.transform = 'scale(' + (view.clientWidth / W) + ')';
+      if (f) f.style.transform = 'scale(' + (view.clientWidth / W) + ')';
     }
 
     function build(view) {
       if (view.dataset.built) return;
       view.dataset.built = '1';
-
-      if (view.dataset.embed !== 'live') { view.dataset.state = 'blocked'; return; }
 
       var f = document.createElement('iframe');
       f.src = view.dataset.src;
@@ -230,7 +259,8 @@
 
       var settled = false;
       var give = setTimeout(function () {
-        if (!settled) { settled = true; view.dataset.state = 'blocked'; f.remove(); }
+        // never loaded — drop back to the screenshot underneath
+        if (!settled) { settled = true; f.remove(); view.dataset.embed = 'poster'; }
       }, 8000);
 
       f.addEventListener('load', function () {

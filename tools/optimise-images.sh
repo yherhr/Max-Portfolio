@@ -1,21 +1,61 @@
 #!/usr/bin/env bash
-# The gallery loads full-size camera JPEGs from jsDelivr. Resizing the longest
-# edge to 1600px typically cuts the payload by 70-80% with no visible change at
-# the sizes the site actually displays.
+# Resize and compress camera originals for the web, into the gallery folders.
 #
-#   ./tools/optimise-images.sh /path/to/original/photos
+#   ./tools/optimise-images.sh <source-folder> <category>
 #
-# Writes into img/. Then find-and-replace the CDN base URL with img/ in
-# js/mkm.js (the CDN constant at the top) and in the four HTML files.
+#   ./tools/optimise-images.sh ~/Pictures/studio-shoot-aug studio
+#   ./tools/optimise-images.sh ~/Pictures/acme-products    product
+#
+# Writes img/gallery/<category>/ at 2000px on the longest edge, quality 82,
+# EXIF stripped. Then run ./tools/build-gallery.sh to pick them up.
+#
+# WHY THIS MATTERS MORE THAN ANY HOSTING DECISION
+# A 6000px camera JPEG is roughly 8 MB. The gallery displays it at about 500px
+# wide, so you're shipping something like 40x the pixels anyone can see. 500 MB
+# of originals typically lands around 40-60 MB after this — which fits GitHub
+# Pages comfortably and loads far faster. Do this before you decide where to
+# host anything.
+#
+# Requires ImageMagick:  brew install imagemagick  /  sudo apt install imagemagick
 
-SRC="${1:?usage: optimise-images.sh <folder-of-originals>}"
-mkdir -p img
+set -euo pipefail
+cd "$(dirname "$0")/.."
 
-command -v magick >/dev/null 2>&1 || { echo "ImageMagick not found — install it first."; exit 1; }
+SRC="${1:?usage: optimise-images.sh <source-folder> <category>}"
+CAT="${2:?usage: optimise-images.sh <source-folder> <category>}"
+DEST="img/gallery/${CAT}"
 
-for f in "$SRC"/*.{jpg,JPG,jpeg,png,PNG}; do
-  [ -e "$f" ] || continue
-  out="img/$(basename "${f%.*}").jpg"
-  magick "$f" -auto-orient -resize '1600x1600>' -strip -quality 80 "$out"
-  printf "%-34s %s\n" "$(basename "$out")" "$(du -h "$out" | cut -f1)"
+command -v magick >/dev/null 2>&1 || MAGICK=convert
+MAGICK="${MAGICK:-magick}"
+command -v "$MAGICK" >/dev/null 2>&1 || { echo "ImageMagick not found. Install it first."; exit 1; }
+
+mkdir -p "$DEST"
+
+before=0; after=0; n=0
+
+shopt -s nullglob nocaseglob
+for f in "$SRC"/*.{jpg,jpeg,png,tif,tiff,heic}; do
+  base=$(basename "${f%.*}")
+  out="${DEST}/${base}.jpg"
+
+  b=$(wc -c < "$f")
+  "$MAGICK" "$f" -auto-orient -resize '2000x2000>' -strip \
+            -sampling-factor 4:2:0 -interlace JPEG -quality 82 "$out"
+  a=$(wc -c < "$out")
+
+  before=$((before + b)); after=$((after + a)); n=$((n + 1))
+  printf "  %-40s %6s KB -> %6s KB\n" "$base" "$((b/1024))" "$((a/1024))"
 done
+shopt -u nullglob nocaseglob
+
+if [[ $n -eq 0 ]]; then
+  echo "No images found in $SRC"
+  exit 1
+fi
+
+echo
+printf "%d images: %d MB -> %d MB" "$n" "$((before/1048576))" "$((after/1048576))"
+[[ $before -gt 0 ]] && printf "  (%d%% smaller)" "$(( 100 - (after * 100 / before) ))"
+echo
+echo
+echo "Next:  ./tools/build-gallery.sh"

@@ -257,9 +257,17 @@ body.menu-open .burger span:nth-child(2) { transform: translateY(-4px) rotate(-4
   font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--smoke); margin-top: 26px;
 }
 
-/* ---------- CLIENT SITE EMBEDS ---------- */
+/* ---------- CLIENT SITE CARDS ----------
+   Default is a screenshot ("poster"). Shopify and plenty of other hosts send
+   X-Frame-Options / CSP frame-ancestors, which makes a live iframe impossible —
+   and the browser still fires load on the error page, so JS can't detect it.
+   A screenshot always renders. data-embed="live" is still supported per-card for
+   sites you've confirmed allow framing.
+------------------------------------------------------------------------- */
 .frames { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(18px, 2.4vw, 34px); }
-.frame { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface); }
+.frame { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--surface);
+  transition: border-color .3s var(--ease), transform .3s var(--ease); }
+.frame:hover { border-color: var(--line-strong); transform: translateY(-3px); }
 .frame__bar {
   display: flex; align-items: center; gap: 12px; padding: 11px 15px;
   border-bottom: 1px solid var(--line); background: var(--surface-2);
@@ -272,29 +280,55 @@ body.menu-open .burger span:nth-child(2) { transform: translateY(-4px) rotate(-4
   background: var(--void); border-radius: 999px; padding: 5px 12px; text-align: center;
 }
 .frame__view { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--void); }
-.frame__view img.poster {
+
+/* the screenshot fills the card and links straight out */
+.frame__shot { position: absolute; inset: 0; display: block; }
+.frame__shot img.poster {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: top center;
+  transition: transform 1.1s var(--ease), filter .5s var(--ease);
 }
+.frame:hover .frame__shot img.poster { transform: scale(1.025); }
+
+/* shown only when no screenshot exists yet — reads as a deliberate minimal card */
+.frame__empty {
+  position: absolute; inset: 0; display: none;
+  flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  text-align: center; padding: 24px; background: var(--surface);
+}
+.frame__view[data-state="empty"] .frame__empty { display: flex; }
+.frame__empty b {
+  font-family: var(--display); font-weight: 700; letter-spacing: -.02em;
+  font-size: clamp(19px, 2.4vw, 30px); color: var(--bone);
+}
+.frame__empty span { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--smoke); }
+
+.frame__open {
+  position: absolute; right: 14px; bottom: 14px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--void); background: var(--bone);
+  padding: 9px 15px; border-radius: 999px;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+}
+.frame__open svg { width: 12px; height: 12px; }
+.frame:hover .frame__open, .frame__shot:focus-visible .frame__open { opacity: 1; transform: none; }
+
+/* live iframe mode, only for sites confirmed to allow framing */
 .frame__view iframe {
   position: absolute; top: 0; left: 0; width: 1440px; height: 900px;
   border: 0; transform-origin: top left; background: var(--void);
 }
-.frame__fallback {
-  position: absolute; inset: 0; display: none; flex-direction: column;
-  align-items: center; justify-content: center; gap: 14px; text-align: center;
-  padding: 24px; background: var(--surface); z-index: 4;
-}
-.frame__view[data-state="blocked"] .frame__fallback { display: flex; }
-.frame__fallback p { font-size: 13px; color: var(--smoke); max-width: 32ch; }
 .frame__load {
   position: absolute; inset: 0; z-index: 3; display: flex; align-items: center; justify-content: center;
   background: rgba(12, 11, 10, .55);
   font-size: 12px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
   color: var(--bone); transition: opacity .5s var(--ease);
 }
-.frame__view[data-state="live"] .frame__load,
-.frame__view[data-state="blocked"] .frame__load { opacity: 0; pointer-events: none; }
+.frame__view[data-state="live"] .frame__load { opacity: 0; pointer-events: none; }
+.frame__view[data-embed="poster"] .frame__load { display: none; }
+
 .frame__meta { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 18px 20px 20px; }
 .frame__meta h3 { font-size: clamp(17px, 1.6vw, 22px); font-weight: 700; }
 .frame__meta .k { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--smoke); margin-top: 5px; display: block; }
@@ -490,7 +524,7 @@ footer { border-top: 1px solid var(--line); padding-block: 46px; }
   nav.primary.open .navlink:last-child { border-bottom: none; }
   .chain, .chain--4, .chain--3 { grid-template-columns: minmax(0, 1fr); }
   .chain__step { padding-right: 0; }
-  .grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .two, .caps { grid-template-columns: minmax(0, 1fr); }
   .steps { grid-template-columns: minmax(0, 1fr); }
   .step { border-right: 0; }
