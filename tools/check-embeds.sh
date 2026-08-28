@@ -13,6 +13,8 @@
 SITES=(
   "https://www.rokiovertime.com"
   "https://cmedetailing.net"
+  "https://bxrealty.com.au"
+  "https://ruralaps.com.au"
   "https://www.nutraviva.com.au"
   "https://yherhr.github.io/Krause_Photography/"
 )

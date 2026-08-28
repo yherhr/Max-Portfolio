@@ -32,10 +32,12 @@ index.html          hero · 5-stage end-to-end chain · 3 image bands · live cl
 web.html            live embeds, what-you-get, every build, service areas
 photography.html    session types, full gallery + lightbox, shoot process
 automation.html     capability, platforms, background
+support.html        on-call plans + quote configurator
 404.html            themed, and resolves its own base path (see below)
 css/mkm.css         one stylesheet
 js/mkm.js           one script, no libraries
 js/gallery-data.js  generated gallery manifest — the only place photos are listed
+js/pricing-data.js  support rates — PLACEHOLDERS until you set confirmed: true
 tools/              optimise-images.sh · build-thumbs.sh · build-gallery.sh
                     use-cdn.sh · stamp-assets.sh · shots.mjs
                     build-sitemap.sh · set-site-url.sh · check-embeds.sh
@@ -94,30 +96,90 @@ and from `file://`.
 
 ## 4. Client site cards
 
-The cards show **screenshots**, in browser chrome, linking straight out to the live
-site. Shopify sends `X-Frame-Options`, so an iframe was never going to work there —
-and worse, a blocked site still fires `load` on its error page, so there's no reliable
-way to detect it in JS and swap in a fallback. A screenshot always renders.
+Six now: Rokiovertime, CME Detailing, BX Realty, Rural Asset Protection,
+Nutraviva and Krause Photography. `web.html` shows the first four — the client
+web builds — and `index.html` shows all six.
 
-Capture them with:
+The cards are **screenshots** in browser chrome, linking out to the live site.
+Shopify sends `X-Frame-Options`, so an iframe was never going to work there, and
+a blocked site still fires `load` on its error page — there's no reliable way to
+detect it in JS and swap in a fallback. A screenshot always renders.
+
+### Capturing them
 
 ```bash
 npm i -D playwright && npx playwright install chromium
 node tools/shots.mjs
 ```
 
-Writes `img/work/<slug>.jpg` at 1440×900, roughly 2× the size the cards display at, so
-they stay sharp on a retina screen. The script dismisses the usual cookie and
-newsletter popups first so they don't get baked into the shot.
+**This works for every site, including the ones that block embedding.**
+`X-Frame-Options` stops a page being put inside a frame; it doesn't stop a
+browser visiting it and taking a picture. The script drives a real browser to
+each URL, dismisses the usual cookie and newsletter popups so they don't get
+baked in, and writes `img/work/<slug>.jpg` at 1440×900.
 
-**You can ship before running it.** A missing screenshot falls back to a clean panel
-with the business name and domain on the surface colour — it reads as deliberate, not
-broken. A partial run is safe for the same reason.
+If you'd rather not install Playwright, drop your own images in `img/work/`
+using exactly these filenames:
 
-If you ever want a genuinely live frame for a site you've confirmed allows it, run
-`./tools/check-embeds.sh` and set `data-embed="live"` on that card's `.frame__view`.
-The iframe code is still there, just opt-in now, and it falls back to the screenshot if
-the frame never loads.
+```
+rokiovertime.jpg   cme-detailing.jpg   bx-realty.jpg
+rural-asset-protection.jpg   nutraviva.jpg   krause-photography.jpg
+```
+
+Roughly 16:10 and at least 1440px wide. The cards crop from the top, so a
+homepage's first screenful is what you want.
+
+**Two are already captured.** `krause-photography.jpg` and
+`rural-asset-protection.jpg` were rendered from your public GitHub repos —
+neither live site is reachable from my sandbox, but both repos are, so I cloned
+them and screenshotted the real pages locally. One caveat on the RAPS one: it's
+a picture of **the repo's current build**, and production was last seen serving
+a stale build via Cloudflare direct upload. If prod is still behind, that
+screenshot shows something visitors can't yet see. Recapture after you redeploy.
+
+**You can ship before either.** A card with no screenshot falls back to a
+compact panel with the business name and domain — it's deliberately shorter than
+a filled card so six empty ones don't read as a wall of nothing. A partial run
+is safe for the same reason.
+
+### The quote PDF
+
+The builder has a **Download as PDF** button. It renders a proper one-page
+document — your selection, the indicative range, how it's built up, and the
+terms — then calls `window.print()`, so the customer saves it through the
+browser's own print-to-PDF.
+
+That's deliberate over a JS library: no dependency, no build step, nothing to
+keep updated, and the output is a real PDF. The document lives in a `.qdoc`
+element that's hidden on screen and revealed only to the printer, so nothing
+about the page changes for someone who never clicks it.
+
+While `confirmed: false`, the PDF carries the same **Worked example** notice as
+the on-screen panel — you can't hand someone a document with placeholder rates
+and no warning on it.
+
+### Hourly rates and the callout
+
+`js/pricing-data.js` now carries **your actual figures**: `hourly: 200` on the
+automation tier, `hourly: 180` on the three web tiers. Those two numbers are
+real; everything else in that file is still placeholder.
+
+The callout is one number, not two — `calloutHours: 2.5`. Both the panel and the
+PDF read:
+
+> The standard 2.5-hour callout is included — waived because you subscribed.
+> Off-plan the same callout starts at $500 before anyone looks at it. Work
+> beyond it is billed at $200/hr.
+
+The off-plan figure is computed (`hourly × calloutHours`), so it tracks the rate
+automatically — $500 on automation, $450 on web. That comparison is the strongest
+line in the whole builder: it puts a number on what not subscribing costs.
+
+### If you ever want a genuinely live frame
+
+`./tools/check-embeds.sh` reports which sites allow it. Anything it marks OK can
+take `data-embed="live"` on that card's `.frame__view`; the iframe code is still
+there, opt-in, and falls back to the screenshot if the frame never loads.
 
 ## 5. Adding media — the gallery is now data-driven
 
@@ -308,7 +370,68 @@ to — the point of the manifest is that you can add media yourself without touc
 code. Send files only when you want me to pick the categories or promote a shot
 into the hero.
 
-## 6. Decisions I've left to you
+## 6. On-call support and the quote builder
+
+`support.html` is new: the on-call proposition, three tiers, and a configurator
+that produces an indicative monthly figure.
+
+### Set your rates before this goes live
+
+**Every number in `js/pricing-data.js` is a placeholder.** They're structurally
+sensible but they are not your rates, and I'm not going to invent numbers for
+your business and let you ship them by accident. So while `confirmed: false`:
+
+- the quote panel is headed **"Worked example"** and says the rates aren't final
+- the browser console warns on load
+- the deploy workflow raises a warning
+
+Work through the file, then set `confirmed: true` and all three disappear. The
+maths is:
+
+```
+monthly = (base x response x coverage + add-ons) x term
+```
+
+shown as a band of ±`rangePct`. Deleting an option removes it; deleting a whole
+array removes that question — the UI and the calculation both adapt.
+
+### On "tailored to the customer"
+
+There are two readings of that and they're very different.
+
+What I built is a **configurator**: the customer's own answers drive the number,
+the breakdown is itemised in front of them, and two people making the same
+choices see the same price.
+
+What I didn't build is **per-visitor pricing** — showing different numbers to
+different people based on inferred wealth, location, device or referrer. It's
+unreliable technically (you're guessing from an IP and a user-agent), and in
+Australia undisclosed personalised pricing runs at misleading conduct under the
+Australian Consumer Law. It also tends to surface publicly at some point, and
+a trades-and-services brand doesn't survive that well.
+
+If what you meant was quoting each client individually — that's just normal
+business, and it's what the "send this for an exact quote" button is for. The
+builder gets them to a realistic ballpark so nobody wastes a call, and the email
+arrives with their whole selection attached so your first reply can be a real
+number instead of twenty questions.
+
+### The automation tier
+
+`domains` includes an industrial control system option. Publishing *rates* for
+that is a bigger step than publishing capability — it reads as touting for work
+in your employer's field at a specific price. Delete that one entry if you'd
+rather not; everything else adapts.
+
+### What it does
+
+- Three tier cards, each prefilling the builder via `data-preset`
+- Radio/checkbox groups generated from the config, keyboard navigable with
+  arrow keys, `aria-live` on the result
+- Itemised breakdown so the figure is never a black box
+- "Send this" hands the entire selection to the enquiry email
+
+## 7. Decisions I've left to you
 
 **The automation band has no photograph.** There's no industrial imagery in your
 library, and using a product shot there would misrepresent the work. So that slot is a
@@ -330,7 +453,7 @@ falsifiable thing on the page, so check they still hold.
 
 ---
 
-## 7. Against your standing build rules
+## 8. Against your standing build rules
 
 | Rule | Status |
 |---|---|

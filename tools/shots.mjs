@@ -3,8 +3,8 @@
 //   npm i -D playwright && npx playwright install chromium
 //   node tools/shots.mjs
 //
-// Writes img/work/<slug>.jpg at 1440x900, which is roughly 2x the size the
-// cards display at, so they stay sharp on a retina screen.
+// Writes img/work/<slug>.jpg at 1440x720 (2:1), matching the card's aspect so
+// nothing gets cropped, and roughly 2x the displayed size so it stays sharp.
 //
 // The <slug> must match the filename in the card markup. If a capture fails,
 // the card falls back to a clean panel showing the business name and domain —
@@ -14,17 +14,19 @@ import { chromium } from 'playwright';
 import { mkdir, stat } from 'node:fs/promises';
 
 const SITES = [
-  ['rokiovertime',       'https://www.rokiovertime.com'],
-  ['cme-detailing',      'https://cmedetailing.net'],
-  ['nutraviva',          'https://www.nutraviva.com.au'],
-  ['krause-photography', 'https://yherhr.github.io/Krause_Photography/'],
+  ['rokiovertime',            'https://www.rokiovertime.com'],
+  ['cme-detailing',           'https://cmedetailing.net'],
+  ['bx-realty',               'https://bxrealty.com.au'],
+  ['rural-asset-protection',  'https://ruralaps.com.au'],
+  ['nutraviva',               'https://www.nutraviva.com.au'],
+  ['krause-photography',      'https://yherhr.github.io/Krause_Photography/'],
 ];
 
 await mkdir('img/work', { recursive: true });
 
 const browser = await chromium.launch();
 const ctx = await browser.newContext({
-  viewport: { width: 1440, height: 900 },
+  viewport: { width: 1440, height: 720 },
   deviceScaleFactor: 1,
   // some sites gate on a real UA
   userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +
@@ -58,7 +60,7 @@ for (const [slug, url] of SITES) {
       path: `img/work/${slug}.jpg`,
       type: 'jpeg',
       quality: 80,
-      clip: { x: 0, y: 0, width: 1440, height: 900 },
+      clip: { x: 0, y: 0, width: 1440, height: 720 },
     });
 
     const { size } = await stat(`img/work/${slug}.jpg`);
