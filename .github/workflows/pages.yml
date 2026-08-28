@@ -56,6 +56,27 @@ jobs:
             echo "every gallery image has responsive variants"
           fi
 
+      - name: Check every local image reference resolves
+        run: |
+          chmod +x tools/check-images.sh
+          ./tools/check-images.sh
+
+      - name: Report missing client screenshots
+        run: |
+          chmod +x tools/check-shots.sh
+          ./tools/check-shots.sh | tee /tmp/shots.txt
+          if grep -q MISSING /tmp/shots.txt; then
+            echo "::warning::some client cards have no screenshot in img/work/ — see the step log"
+          fi
+
+      - name: Warn if support pricing is unconfirmed
+        run: |
+          if grep -q 'confirmed:[[:space:]]*false' js/pricing-data.js 2>/dev/null; then
+            echo "::warning::js/pricing-data.js still has confirmed: false — the support page is showing placeholder rates as a worked example."
+          else
+            echo "support pricing confirmed"
+          fi
+
       - name: Cache-bust css/js links
         run: |
           chmod +x tools/stamp-assets.sh
