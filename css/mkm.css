@@ -293,8 +293,10 @@ body.menu-open .burger span:nth-child(2) { transform: translateY(-4px) rotate(-4
   background: var(--void); border-radius: 999px; padding: 5px 12px; text-align: center;
 }
 .frame__view { position: relative; aspect-ratio: 2 / 1; overflow: hidden; background: var(--void); }
-/* no screenshot captured yet — don't reserve a full preview's worth of space */
-.frame__view[data-state="empty"] { aspect-ratio: 16 / 5; }
+/* An empty card must be the SAME height as a filled one. Making it shorter
+   looked tidier while all six were empty, but grid rows stretch to their
+   tallest item — so as soon as one card had a screenshot, its empty neighbour
+   was padded out with dead space inside the border. Uniform beats compact. */
 
 /* the screenshot fills the card and links straight out */
 .frame__shot { position: absolute; inset: 0; display: block; }

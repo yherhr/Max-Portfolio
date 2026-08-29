@@ -118,8 +118,18 @@ browser visiting it and taking a picture. The script drives a real browser to
 each URL, dismisses the usual cookie and newsletter popups so they don't get
 baked in, and writes `img/work/<slug>.jpg` at 1440×900.
 
-If you'd rather not install Playwright, drop your own images in `img/work/`
-using exactly these filenames:
+**If they were captured through Claude in Chrome**, they're in your Windows temp
+folder and the assistant can't read them back — that's a one-way street. Run:
+
+```powershell
+.\tools\import-shots.ps1
+```
+
+It finds the capture folder, lists what's there, proposes a mapping and asks you
+to confirm before copying. Filenames don't matter, so re-captures and discarded
+shots are fine.
+
+Otherwise drop your own images in `img/work/` using exactly these filenames:
 
 ```
 rokiovertime.jpg   cme-detailing.jpg   bx-realty.jpg
