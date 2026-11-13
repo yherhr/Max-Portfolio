@@ -1,0 +1,17 @@
+// Cloudflare Worker "max-portfolio": serves this repository as static files.
+// The name must match the Worker's name in the Cloudflare dashboard or the build fails.
+{
+  "name": "max-portfolio",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./",
+    // Serve the styled 404.html, with a 404 status, for any address that does not exist.
+    "not_found_handling": "404-page",
+    // Every canonical, sitemap entry and link on the site ends in .html. The default
+    // setting answers those with a 307 to an extensionless address; "none" serves them as they are.
+    "html_handling": "none"
+  },
+  // Lets Cloudflare build a preview for every branch other than main. Nothing to set:
+  // previews use the same assets and settings as production.
+  "previews": {}
+}
