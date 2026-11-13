@@ -1,7 +1,0 @@
-# Optional. One line: the base URL every gallery path is prefixed with.
-# Blank or all-commented means serve locally from this repo.
-#
-# The CDN must mirror this repo's img/gallery/... structure, so a media repo
-# containing img/gallery/apparel/x.jpg serves as <base>/img/gallery/apparel/x.jpg
-#
-# Set it with:  ./tools/use-cdn.sh https://cdn.jsdelivr.net/gh/yherhr/mkm-media@main
