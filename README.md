@@ -1,12 +1,12 @@
 # maxkmedia.com
 
-The published website for Max K Media. GitHub Pages serves this repository exactly as committed, so whatever is on `main` is live. There is no build step on deploy.
+The published website for Max K Media. Cloudflare serves this repository as static files, exactly as committed: the `max-portfolio` Worker deploys every push to `main`, and builds a preview for every other branch. There is no build step.
 
 ## Making a change
 
 1. Work on a branch.
 2. Open a pull request into `main`.
-3. Merge it. `.github/workflows/pages.yml` publishes on every push to `main`.
+3. Check the preview address Cloudflare posts on the pull request, then merge. Merging publishes.
 
 ## What is in here
 
@@ -17,6 +17,7 @@ The published website for Max K Media. GitHub Pages serves this repository exact
 | `blog.html`, `blog/` | The blog pages built from those posts. Do not edit these by hand |
 | `tools/blog/build.py` | The script that builds the blog |
 | `.github/docs/SEO-HANDOVER.md` | Handover notes from the November 2026 build |
+| `wrangler.jsonc`, `_redirects`, `.assetsignore` | Cloudflare settings: keep `.html` addresses, serve the home page and 404 page, and keep `content/`, `tools/` and this file off the public site |
 
 ## Writing a blog post
 

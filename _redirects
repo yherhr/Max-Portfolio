@@ -1,0 +1,4 @@
+# With html_handling "none" a folder address no longer finds its index page, so name them.
+/ /index.html 200
+/services/ /services/index.html 200
+/services /services/ 301
