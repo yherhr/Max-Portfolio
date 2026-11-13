@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en-AU">
+<title>Max K Media blog</title><subtitle>New sites, recent shoots and notes on how the jobs get done. The guides cover the questions that never change; this is everything with a date on it.</subtitle>
+<link href="https://maxkmedia.com/blog/feed.xml" rel="self"/><link href="https://maxkmedia.com/blog.html"/><id>https://maxkmedia.com/blog.html</id>
+<updated>2026-11-13T00:00:00+11:00</updated><author><name>Max Krause</name><uri>https://maxkmedia.com/about.html</uri></author>
+<entry><title>The website has been rebuilt</title><link href="https://maxkmedia.com/blog/new-website.html"/><id>https://maxkmedia.com/blog/new-website.html</id><published>2026-11-13T00:00:00+11:00</published><updated>2026-11-13T00:00:00+11:00</updated><summary>Max K Media has a rebuilt website: web, photography, video and automation in one place, with case studies, guides and every old address still working.</summary></entry>
+</feed>
