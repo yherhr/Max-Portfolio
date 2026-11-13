@@ -1,16 +1,33 @@
 {
   "name": "Max K Media",
   "short_name": "MKM",
-  "description": "Web development, photography and industrial automation — Bathurst, Central West NSW.",
+  "description": "Websites, photography, video and industrial automation. Bathurst, Central West NSW.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0B0814",
-  "theme_color": "#0B0814",
+  "background_color": "#0B0D09",
+  "theme_color": "#2C3A24",
   "icons": [
-    { "src": "favicon-32.png",       "sizes": "32x32",   "type": "image/png" },
-    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
-    { "src": "icon-512.png",         "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
-    { "src": "favicon.svg",          "sizes": "any",     "type": "image/svg+xml" }
+    {
+      "src": "favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
   ]
 }
