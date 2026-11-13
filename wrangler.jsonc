@@ -10,5 +10,8 @@
     // Every canonical, sitemap entry and link on the site ends in .html. The default
     // setting answers those with a 307 to an extensionless address; "none" serves them as they are.
     "html_handling": "none"
-  }
+  },
+  // Lets Cloudflare build a preview for every branch other than main. Nothing to set:
+  // previews use the same assets and settings as production.
+  "previews": {}
 }
