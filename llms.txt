@@ -47,6 +47,7 @@ Contact: 0490 365 553, max@maxkmedia.com. ABN 47 419 910 441.
 
 ## Blog
 - [Blog: New Work, Shoots & Build Notes](https://maxkmedia.com/blog.html): News from Max K Media in Bathurst: new websites, recent shoots and notes on how the work gets done, for businesses across the Central West.
+- [Website Not Showing Up on Google? Find Out Why](https://maxkmedia.com/blog/website-not-showing-on-google.html): Website not showing up on Google? How to tell whether Google has the site at all, what the Search Console reports mean, and the usual fixes for small sites.
 - [PLC End of Life: What to Do When Yours Is Obsolete](https://maxkmedia.com/blog/plc-end-of-life.html): What PLC end of life means for a small plant, the dates for Modicon Premium, Quantum, S7-300 and SLC 500, and what to do before something fails.
 - [The website has been rebuilt](https://maxkmedia.com/blog/new-website.html): Max K Media has a rebuilt website: web, photography, video and automation in one place, with case studies, guides and every old address still working.
 - [Car Detailing Before and After Photos That Sell](https://maxkmedia.com/blog/detailing-before-after-photos.html): Car detailing before and after photos only work if the two frames match. How to shoot them on a phone, what to keep the same, and where to use them.
