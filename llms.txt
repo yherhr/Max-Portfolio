@@ -47,6 +47,7 @@ Contact: 0490 365 553, max@maxkmedia.com. ABN 47 419 910 441.
 
 ## Blog
 - [Blog: New Work, Shoots & Build Notes](https://maxkmedia.com/blog.html): News from Max K Media in Bathurst: new websites, recent shoots and notes on how the work gets done, for businesses across the Central West.
+- [Car Dealership Photography for Regional Car Yards](https://maxkmedia.com/blog/car-dealership-photography.html): Car dealership photography for regional yards. How many photos each car needs, the angles that matter, one set-up for every car, and the rules Google sets.
 - [PLC Program Backup: A Checklist for Small Plants](https://maxkmedia.com/blog/plc-program-backup.html): A PLC program backup is only useful if it restores. What a full backup includes, where comments get lost, battery-backed memory, and how to test it.
 - [Website Not Secure in Chrome? What to Fix](https://maxkmedia.com/blog/website-not-secure.html): Website not secure in Chrome? What the new HTTPS warning in Chrome 154 means, why it can appear on a site that has a certificate, and how to fix it.
 - [Video SEO for Small Business: Get Found on Google](https://maxkmedia.com/blog/video-seo-small-business.html): Video SEO for small business. Why Google skips most videos on business sites, what a watch page is, and how to set up YouTube and your site so they get found.
