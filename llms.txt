@@ -47,6 +47,7 @@ Contact: 0490 365 553, max@maxkmedia.com. ABN 47 419 910 441.
 
 ## Blog
 - [Blog: New Work, Shoots & Build Notes](https://maxkmedia.com/blog.html): News from Max K Media in Bathurst: new websites, recent shoots and notes on how the work gets done, for businesses across the Central West.
+- [Music in Business Videos: What You Can Legally Use](https://maxkmedia.com/blog/music-in-business-videos.html): Music in business videos for Australian small businesses: why your song may be blocked, which libraries are cleared, and when you need a licence.
 - [Website Accessibility Requirements in Australia](https://maxkmedia.com/blog/website-accessibility-requirements.html): Website accessibility requirements in Australia for small business: what the law says, why WCAG 2.2 AA is the target, and what to fix first.
 - [PLC Program Backup: A Checklist for Small Plants](https://maxkmedia.com/blog/plc-program-backup.html): A PLC program backup is only useful if it restores. What a full backup includes, where comments get lost, battery-backed memory, and how to test it.
 - [Website Not Secure in Chrome? What to Fix](https://maxkmedia.com/blog/website-not-secure.html): Website not secure in Chrome? What the new HTTPS warning in Chrome 154 means, why it can appear on a site that has a certificate, and how to fix it.
